@@ -1,1 +1,5 @@
- /* mail index  */
+.mail-index{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    font-family: sans-serif;
+}

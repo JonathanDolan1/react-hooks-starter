@@ -1,0 +1,11 @@
+.mail-folder-list input{
+    display: none;
+}
+
+.mail-folder-list.selected{
+    font-weight: bold;
+}
+
+.mail-folder-list label:hover{
+    cursor: pointer;
+}

@@ -1,3 +1,70 @@
-.mail-preview.read{
+.mail-preview {
+    display: grid;
+    grid-template-columns: 15% 75% 10%;
+    flex-grow: 0;
+    border-block-end: 0.08lh solid lightgray;
+    font-size: 0.875rem;
+}
+
+.mail-preview:hover {
+    cursor: pointer;
+    grid-template-columns: 15% 85% 0%;
+}
+
+
+.mail-preview.read {
     background-color: var(--readMailColor);
+}
+
+.mail-preview td {
+    padding: 1em;
+}
+
+.mail-preview td:first-child,
+.mail-preview .subject-body {
+    display: block;
+    height: 1lh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mail-preview.unread td:not(:nth-child(2n)),
+.mail-preview.unread td:nth-child(2n) span.subject {
+    font-weight: 700;
+}
+
+.mail-preview td:nth-child(2n) {
+    display: flex;
+    gap: 1em;
+}
+
+.mail-preview td:nth-child(2n) span.subject {
+    margin-inline-end: 1em;
+}
+
+.mail-preview td:nth-child(2n) span.body {
+    flex-grow: 1;
+}
+
+.mail-preview td:nth-child(2n) .icons {
+    display: none;
+    gap: 2em;
+    flex-shrink: 0;
+    padding-inline: 1em;
+}
+
+.mail-preview:hover td:nth-child(2n) .icons {
+    display: flex;
+}
+
+.mail-preview td:last-child {
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.mail-preview:hover td:last-child{
+    display: none;
 }

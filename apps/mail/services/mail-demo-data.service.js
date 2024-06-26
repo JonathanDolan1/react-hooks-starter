@@ -122,26 +122,26 @@ function _getRandomFromAndTo() {
 }
 
 function _generateTimestamps() {
-    const createdAt = _generateRandomTimestamp(); // Random timestamp from the last 5 years
+    const createdAt = _generateRandomTimestamp(); 
     let sentAt
     let removedAt
-    // Generate a random chance of sentAt being null (1 in 5 chance in this case)
+    
     const sentAtChanceOfNull = Math.random() < 0.2;
 
     if (sentAtChanceOfNull) {
-        sentAt = null; // sentAt is null
-        removedAt = null; // removedAt is also null if sentAt is null
+        sentAt = null; 
+        removedAt = null;
     } else {
-        // Generate a random timestamp between createdAt and now
+        
         sentAt = createdAt + Math.floor(Math.random() * (Date.now() - createdAt));
 
-        // Generate a random chance of removedAt being null (1 in 5 chance in this case)
+        
         const removedAtChanceOfNull = Math.random() < 0.2;
 
         if (removedAtChanceOfNull) {
-            removedAt = null; // removedAt is null
+            removedAt = null; 
         } else {
-            // Generate removedAt between sentAt and now
+            
             removedAt = sentAt + Math.floor(Math.random() * (Date.now() - sentAt));
         }
     }

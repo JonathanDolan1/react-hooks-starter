@@ -1,1 +1,4 @@
- /* mail list */
+.mail-list{
+    table-layout: fixed;
+    width: 100%;
+ }
