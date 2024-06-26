@@ -1,3 +1,9 @@
 :root {
     --main-bg-color: lightblue;
-}
+
+    /* Gmail colors */
+    --bgColor:rgb(246, 248, 252);
+    --newEmailColor:rgb(194, 231, 255);
+    --iconColor:rgb(211, 227, 253);
+    --searchColor:rgb(234, 241, 251);
+}   
