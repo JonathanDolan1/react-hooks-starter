@@ -8,7 +8,8 @@ export const utilService = {
     getMonthName,
     animateCSS,
     debounce,
-
+    saveToStorage,
+    loadFromStorage,
 }
 
 function makeId(length = 6) {
@@ -88,4 +89,14 @@ function debounce(callback, wait) {
             callback(...args);
         }, wait);
     };
+}
+
+
+function saveToStorage(key, val) {
+    localStorage.setItem(key, JSON.stringify(val))
+}
+
+function loadFromStorage(key) {
+    var val = localStorage.getItem(key)
+    return JSON.parse(val)
 }
