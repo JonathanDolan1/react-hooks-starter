@@ -1,0 +1,19 @@
+.note-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 200px;
+    max-width: 300px;
+    text-align: left;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid lightgray;
+
+    min-height: 50px;
+    height: fit-content;
+}
+
+.note-text:hover {
+    box-shadow: 2px 2px 3px 0px;
+}

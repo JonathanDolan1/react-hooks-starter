@@ -65,7 +65,7 @@ function _createNote() {
 }
 
 function _createEmptyNote() {
-    const types = ['NoteTxt', 'NoteImg', 'NoteTodos']
+    const types = ['NoteText', 'NoteImg', 'NoteTodo', 'NoteVideo']
     const type = types[utilService.getRandomIntInclusive(0, types.length - 1)]
 
     const bgColors = ['green', 'red', 'yellow', 'blue', 'orange']
@@ -73,20 +73,24 @@ function _createEmptyNote() {
     let content = {}
 
     switch (type) {
-        case 'NoteTxt':
+        case 'NoteText':
             content.txt = utilService.makeLorem(5)
             break;
         case 'NoteImg':
-            content.url = 'http://some-img/me'
+            content.url = 'https://placehold.co/400'
             content.title = 'Bobi and Me'
 
             break;
-        case 'NoteTodos':
+        case 'NoteTodo':
             content.title = 'Get my stuff together'
             content.todos = [
                 { txt: 'Driving license', doneAt: null },
                 { txt: 'Coding power', doneAt: 187111111 }
             ]
+            break;
+        case 'NoteVideo':
+            content.url = 'https://placehold.co/400'
+            content.title = 'video title'
             break;
 
     }

@@ -1,0 +1,56 @@
+.note-todo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 200px;
+    max-width: 300px;
+    width: fit-content;
+
+    min-height: 120px;
+    height: fit-content;
+    text-align: left;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid lightgray;
+
+}
+
+.note-todo:hover {
+    box-shadow: 2px 2px 3px 0px;
+}
+
+.note-todo h4 {
+    font-family: roboto-medium;
+    font-size: 14px;
+    font-weight: 500;
+    padding-block-end: 5px;
+
+
+}
+
+ul.todo-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-block: 3px;
+
+}
+
+ul.todo-list li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    font-family: roboto-regular;
+    font-size: 12px;
+    padding-block: 3px;
+}
+
+ul.todo-list li input {
+    cursor: pointer;
+}
+
+ul.todo-list li input:hover {
+    scale: 1.2;
+}

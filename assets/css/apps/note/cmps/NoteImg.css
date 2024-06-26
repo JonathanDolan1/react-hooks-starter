@@ -1,0 +1,26 @@
+.note-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 200px;
+    max-width: 250px;
+    width: 250px;
+    text-align: left;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid lightgray;
+}
+
+.note-img h4 {
+    font-family: roboto-medium;
+    font-size: 14px;
+    font-weight: 500;
+    padding-block-end: 5px;
+
+}
+
+.note-img img {
+    padding-block-end: 5px;
+
+}

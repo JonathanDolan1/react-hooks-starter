@@ -1,0 +1,17 @@
+.options-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+
+}
+
+.options-bar button{
+    background: none;
+    border: none;
+    
+}
+
+.options-bar button:hover{
+cursor: pointer;
+scale: 1.2;
+}
