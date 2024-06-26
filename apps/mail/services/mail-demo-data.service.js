@@ -1,12 +1,15 @@
-import { mailService } from "./mail.service.js"
 import { utilService } from "../../../services/util.service.js"
 
+const loggedinUser = {
+    email: 'user@appsus.com',
+    fullname: 'Mahatma Appsus'
+}
 
 export const mailDemoDataService = {
     createDemoMails
 }
 
-function createDemoMails(length) {
+function createDemoMails(length = 50) {
     const mails = []
     for (var i = 0; i < length; i++) {
         const mail = {
@@ -45,22 +48,24 @@ function _generateRandomSubject() {
     return `${adjective} ${verb} ${noun}`
 }
 
+
+
 function _generateRandomBody() {
     const sentenceOptions = [
-        'I hope this email finds you well.',
-        'I wanted to reach out to you regarding...',
-        'I would like to inform you that...',
-        'I have a question about...',
-        'I\'m writing to follow up on our previous discussion...'
-    ]
-
-    const signOffOptions = [
-        'Best regards,',
-        'Sincerely,',
-        'Thank you,',
-        'Looking forward to hearing from you,',
-        'Warm regards,',
-    ]
+        'I sincerely hope that this message finds you in the best of health and high spirits, as I reach out to you on this fine day.',
+        'It is with great pleasure that I compose this correspondence, with the intent of discussing a matter of great importance that I believe would be of mutual interest to us both.',
+        'The primary purpose of this email is to convey vital and noteworthy information to you, with the hope that it will provide you with a deeper understanding of the recent developments regarding...',
+        'I would be deeply appreciative if you could dedicate a few moments of your valuable time to address an inquiry I have, concerning a topic that has been the subject of much contemplation on my part, namely...',
+        'I am writing to you today as a follow-up to our previous exchange of thoughts and ideas, during which we delved into the intricate and fascinating world of...'
+      ];
+    
+      const signOffOptions = [
+        'In closing, I would like to express my sincere gratitude for your time and consideration. Your response is greatly anticipated, as I eagerly look forward to the potential insights and knowledge it may bring.',
+        'Should you require any additional details, clarifications, or have any concerns that you would like to address, please do not hesitate to reach out. Your feedback is invaluable and always appreciated.',
+        'It has been an absolute pleasure to correspond with you on this matter. I eagerly anticipate the continued collaboration and exchange of ideas that lies ahead, as we navigate the intricate landscape of our shared interests.',
+        'May the remainder of your day be as productive and rewarding as it has undoubtedly been thus far, and may your endeavors continue to yield great success.',
+        'As we move forward, kindly keep me informed of any updates, changes, or new developments that may arise, so that we may continue to adapt and grow together in our shared pursuit of excellence.'
+      ];
 
     const randomStartIndex = Math.floor(Math.random() * sentenceOptions.length)
     const startSentence = sentenceOptions[randomStartIndex]
@@ -68,23 +73,28 @@ function _generateRandomBody() {
     const randomSignOffIndex = Math.floor(Math.random() * signOffOptions.length)
     const signOff = signOffOptions[randomSignOffIndex]
 
-    return `${startSentence}
-
-    Best,
-  
-    ${signOff}`
+    return `${startSentence} ${signOff} ${_generateRandomName()}`
 }
+
+function _generateRandomName() {
+    const firstNames = [
+      'John', 'Jane', 'Paul', 'Emma', 'Mark', 'Olivia', 'William', 'Sophia', 'Michael', 'Ava'
+    ];
+    const lastNames = [
+      'Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'
+    ];
+  
+    const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);
+    const firstName = firstNames[randomFirstNameIndex];
+  
+    const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);
+    const lastName = lastNames[randomLastNameIndex];
+  
+    return `${firstName} ${lastName}`;
+  }
 
 function _getRandomTrueFalse() {
     return utilService.getRandomIntInclusive(1, 10) > 5 ? true : false
-}
-
-function _getRandomSentAt() {
-    return utilService.getRandomIntInclusive(1, 10) > 5 ? null : utilService.generateRandomTimestamp(5)
-}
-
-function _getRandomRemovedAt() {
-    return getRandomSentAt()
 }
 
 function _getRandomFromAndTo() {
@@ -97,7 +107,7 @@ function _getRandomFromAndTo() {
     const emailProvider = emailProviders[randomProviderIndex];
 
     const emailAddress = `${username}@${emailProvider}`
-    const userEmailAddress = mailService.loggedinUser.email
+    const userEmailAddress = loggedinUser.email
     if (utilService.getRandomIntInclusive(1, 10) > 5) {
         return {
             from: emailAddress,
@@ -110,30 +120,43 @@ function _getRandomFromAndTo() {
         }
     }
 }
-  
-  function _generateTimestamps() {
-    const createdAt = generateRandomTimestamp(); // Random timestamp from the last 5 years
-  
+
+function _generateTimestamps() {
+    const createdAt = _generateRandomTimestamp(); // Random timestamp from the last 5 years
+    let sentAt
+    let removedAt
     // Generate a random chance of sentAt being null (1 in 5 chance in this case)
     const sentAtChanceOfNull = Math.random() < 0.2;
-  
+
     if (sentAtChanceOfNull) {
-      const sentAt = null; // sentAt is null
-      const removedAt = null; // removedAt is also null if sentAt is null
+        sentAt = null; // sentAt is null
+        removedAt = null; // removedAt is also null if sentAt is null
     } else {
-      // Generate a random timestamp between createdAt and now
-      const sentAt = createdAt + Math.floor(Math.random() * (Date.now() - createdAt));
-  
-      // Generate a random chance of removedAt being null (1 in 5 chance in this case)
-      const removedAtChanceOfNull = Math.random() < 0.2;
-  
-      if (removedAtChanceOfNull) {
-        const removedAt = null; // removedAt is null
-      } else {
-        // Generate removedAt between sentAt and now
-        const removedAt = sentAt + Math.floor(Math.random() * (Date.now() - sentAt));
-      }
+        // Generate a random timestamp between createdAt and now
+        sentAt = createdAt + Math.floor(Math.random() * (Date.now() - createdAt));
+
+        // Generate a random chance of removedAt being null (1 in 5 chance in this case)
+        const removedAtChanceOfNull = Math.random() < 0.2;
+
+        if (removedAtChanceOfNull) {
+            removedAt = null; // removedAt is null
+        } else {
+            // Generate removedAt between sentAt and now
+            removedAt = sentAt + Math.floor(Math.random() * (Date.now() - sentAt));
+        }
     }
-  
+
     return { createdAt, sentAt, removedAt };
-  }
+}
+
+function _generateRandomTimestamp(n = 5) {
+    const MILLISECONDS_IN_A_YEAR = 1000 * 60 * 60 * 24 * 365; // About 365.25 days per year
+
+    const nYearsAgo = new Date();
+    nYearsAgo.setFullYear(nYearsAgo.getFullYear() - n); // Set the year to n years ago
+
+    const timestampRange = Date.now() - nYearsAgo.getTime();
+    const randomTimestamp = nYearsAgo.getTime() + Math.floor(Math.random() * timestampRange);
+
+    return randomTimestamp;
+}

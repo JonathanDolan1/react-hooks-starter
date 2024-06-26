@@ -2,11 +2,6 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 import { mailDemoDataService } from './mail-demo-data.service.js'
 
-const loggedinUser = {
-    email: 'user@appsus.com',
-    fullname: 'Mahatma Appsus'
-}
-
 const MAIL_KEY = 'mailDB'
 _createMails()
 
@@ -16,7 +11,7 @@ export const mailService = {
     remove,
     save,
     getEmptyMail,
-    loggedinUser
+    getLoggedInUser
     // getDefaultFilter,
     // getFilterFromSearchParams
 }
@@ -106,4 +101,8 @@ function _setNextPrevMailId(mail) {
         mail.prevMailId = prevMail.id
         return mail
     })
+}
+
+function getLoggedInUser(){
+    return loggedinUser
 }

@@ -3,7 +3,7 @@
 
     /* Gmail colors */
     --bgColor:rgb(246, 248, 252);
-    --newEmailColor:rgb(194, 231, 255);
+    --readMailColor:#f2f6fc;
     --iconColor:rgb(211, 227, 253);
     --searchColor:rgb(234, 241, 251);
 }   
