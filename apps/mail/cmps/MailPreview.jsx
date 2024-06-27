@@ -9,7 +9,7 @@ export function MailPreview({ mail, onArchiveMail }) {
         // Check if the timestamp is within the current day
         const currentDate = new Date().toDateString();
         if (date.toDateString() === currentDate) {
-            const hours = date.getHours();
+            let hours = date.getHours();
             const ampm = hours < 12 ? "AM" : "PM";
             hours = hours % 12;
             hours = hours ? hours : 12;

@@ -2,8 +2,9 @@
     --main-bg-color: lightblue;
 
     /* Gmail colors */
-    --bgColor:rgb(246, 248, 252);
     --readMailColor:#f2f6fc;
+    --sendBtnColor:#0957d0;
+    --bgColor:rgb(246, 248, 252);
     --iconColor:rgb(211, 227, 253);
     --searchColor:rgb(234, 241, 251);
 }   

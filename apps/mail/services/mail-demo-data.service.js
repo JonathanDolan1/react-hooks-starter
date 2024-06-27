@@ -6,7 +6,12 @@ const loggedinUser = {
 }
 
 export const mailDemoDataService = {
-    createDemoMails
+    createDemoMails,
+    getLoggedInUser
+}
+
+function getLoggedInUser(){
+    return loggedinUser
 }
 
 function createDemoMails(length = 50) {
