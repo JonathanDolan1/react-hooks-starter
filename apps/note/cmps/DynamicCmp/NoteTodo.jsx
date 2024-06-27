@@ -8,7 +8,7 @@ export function NoteTodo({ note }) {
     }
 
     return (
-        <article className="note-todo">
+        <article className="note-todo" style={style}>
             <h4>{info.title}</h4>
             <ul className="todo-list">
                 {info.todos.map((todo,idx) =>

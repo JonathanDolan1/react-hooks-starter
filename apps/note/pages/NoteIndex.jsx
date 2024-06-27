@@ -24,7 +24,6 @@ export function NoteIndex() {
     if (!notes) return <div>Loading...</div>
     return (
         <section className="note-index">
-            <div>note app</div>
             <NoteList notes={notes}/>
         </section>
     )

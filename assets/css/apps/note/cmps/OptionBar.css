@@ -1,8 +1,15 @@
 .options-bar {
     display: flex;
+    
     flex-direction: row;
     justify-content: end;
-
+    position: relative;
+    z-index: 2;
+    /* opacity: 0; */
+    
+}
+.options-bar:hover {
+    opacity: 1;
 }
 
 .options-bar button{
@@ -14,4 +21,5 @@
 .options-bar button:hover{
 cursor: pointer;
 scale: 1.2;
+
 }

@@ -5,6 +5,7 @@ import { storageService } from "../../../services/async-storage.service.js"
 //noteDB
 
 const NOTE_KEY = 'noteDB'
+_createNotes()
 
 
 //service functions
@@ -68,19 +69,25 @@ function _createEmptyNote() {
     const types = ['NoteText', 'NoteImg', 'NoteTodo', 'NoteVideo']
     const type = types[utilService.getRandomIntInclusive(0, types.length - 1)]
 
-    const bgColors = ['green', 'red', 'yellow', 'blue', 'orange']
+    const bgColors = ['efeff1', 'e9e3d4', 'f6e2dd', 'd3bfdb', 'aeccdc']
     const bgColor = bgColors[utilService.getRandomIntInclusive(0, bgColors.length - 1)]
-    let content = {}
 
+    const imgs = ['195','196','197','198','199','200','201','202','203','204','205','206','207','208','209','210',]
+    const img = imgs[utilService.getRandomIntInclusive(0, imgs.length - 1)]
+
+    const videos = ["https://www.youtube.com/embed/Ep0gR3D3mvU?si=ysXK6L8hFcqM9xBD","https://www.youtube.com/embed/-1UWZjCEYy8?si=Q9oe6VUr0By96P3t","https://www.youtube.com/embed/37p1euxENs8?si=cPa5xu_OHFqYa9CT","https://www.youtube.com/embed/eikEOz7jVOo?si=NyF9-4dROlTqbrgW",'https://www.youtube.com/embed/Ep0gR3D3mvU?si=dHQ0aoyI1cpXnQxQ']
+    const video = videos[utilService.getRandomIntInclusive(0, videos.length - 1)]
+    let content = {}
+    
     switch (type) {
         case 'NoteText':
             content.txt = utilService.makeLorem(5)
             break;
-        case 'NoteImg':
-            content.url = 'https://placehold.co/400'
-            content.title = 'Bobi and Me'
 
+        case 'NoteImg':
+            content.url = `https://picsum.photos/${img}`
             break;
+
         case 'NoteTodo':
             content.title = 'Get my stuff together'
             content.todos = [
@@ -88,9 +95,9 @@ function _createEmptyNote() {
                 { txt: 'Coding power', doneAt: 187111111 }
             ]
             break;
+
         case 'NoteVideo':
-            content.url = 'https://placehold.co/400'
-            content.title = 'video title'
+            content.url = video
             break;
 
     }

@@ -1,19 +1,18 @@
 .note-list {
+    column-count: auto;
+    column-width: 250px;
+    column-gap: 20px;
     
-    display: flex;
-    flex-direction: row;
+    
 
-    flex-flow: wrap;
-    gap: 10px;
-    justify-content: center;
-    overflow: hidden;
-    
     list-style: none;
     padding: 0;
-    margin: 0;
-
+    margin: 20px;
+    
 }
 
 .note-list > * {
-
+    margin-bottom: 20px;
+    break-inside: avoid;
 }
+

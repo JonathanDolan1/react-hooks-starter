@@ -1,12 +1,12 @@
+
 import { OptionsBar } from "./OptionBar.jsx"
 
-export function NoteVideo({note}) {
+export function NoteImg({note}) {
     const { id, type, createdAt, style, isPinned, info } = note
-
+    
     return (
-        <article className ="note-video">
-             <h4>{info.title}</h4>
-             <img src="https://placehold.co/400/"/>
+        <article className ="note-img" style={style}>
+             <img src={info.url}/>
              <OptionsBar/>
         </article>
     )
