@@ -17,10 +17,23 @@ export function MailIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
+        loadMails()
+    }, [])
+
+    function loadMails() {
         mailService.query()
             .then(setMails)
             .catch(err => showErrorMsg('Error fetching mails from storage: ', err))
-    }, [mails])
+    }
+
+    function onAddMail() {
+        mailService.save(mailService.getNewMail())
+            .then(mail => setSearchParams({ ...searchParams, mailDraftId: mail.id }))
+    }
+
+    function onRemoveMail(id) {
+        mailService.remove(id)
+    }
 
     function onArchiveMail(id) {
         mailService.get(id)
@@ -33,18 +46,17 @@ export function MailIndex() {
             .catch(err => showErrorMsg('Error archiving the mail: ', err))
     }
 
-    function onAddMail() {
-        mailService.save(mailService.getNewMail())
-            .then(mail=>setSearchParams({ ...searchParams, mailDraftId: mail.id }))
-    }
-
-    function onSaveMailDraft(mail){
-        mailService.save(mail)
-            .catch(err=>showErrorMsg('Error saving the draft: ' , err))
+    function onMarkAsRead(id) {
+        mailService.get(id)
+            .then(mail => {
+                mail.isRead = !mail.isRead
+                mailService.save(mail)
+            })
+            .catch(err => showErrorMsg(`Error marking the mail as un/read: `, err))
     }
 
     if (!mails) return <section className="loading">Loading...</section>
-    
+
     const mailDraftId = searchParams.get('mailDraftId')
 
     return (
@@ -53,9 +65,9 @@ export function MailIndex() {
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
                 <MailFolderList />
             </div>
-            {!selectedMailId && <MailList mails={mails} onArchiveMail={onArchiveMail} />}
+            {!selectedMailId && <MailList mails={mails} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />}
             {selectedMailId && <MailDetails mailId={selectedMailId} />}
-            {mailDraftId && <MailEdit onSaveMailDraft={onSaveMailDraft}/>}
+            {mailDraftId && <MailEdit setMails={setMails} />}
         </section>
     )
 }

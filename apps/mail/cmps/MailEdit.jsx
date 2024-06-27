@@ -4,8 +4,8 @@ import { mailService } from "../services/mail.service.js"
 const { useSearchParams } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function MailEdit({onSaveMailDraft}) {
-    
+export function MailEdit({ setMails }) {
+
     const [mailDraft, setMailDraft] = useState(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
@@ -14,33 +14,39 @@ export function MailEdit({onSaveMailDraft}) {
         mailService.get(searchParams.get('mailDraftId'))
             .then(setMailDraft)
             .catch(err => showErrorMsg('Error fetching mail draft: ', err))
-    }       
+    }
         , [])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (mailDraft) {
             onSaveMailDraft(mailDraft)
             if (mailDraft.sentAt) {
                 showSuccessMsg('Mail sent successfuly')
+                setMails(prevMails => [mailDraft, ...prevMails.filter(mail=>mail.id!==mailDraft.id)])
                 onCloseEdit()
             }
         }
-        },[mailDraft])
-    
+    }, [mailDraft])
+
+    function onSaveMailDraft(mail) {
+        mailService.save(mail)
+            .catch(err => showErrorMsg('Error saving the draft: ', err))
+    }
+
     function onCloseEdit() {
         setSearchParams({ ...searchParams, mailDraftId: '' })
     }
-    
+
     function handleChange({ target }) {
         const field = target.name
         const value = target.value
         setMailDraft(prevMailDraft => ({ ...prevMailDraft, [field]: value }))
     }
-    
-    function onSendMail(ev){
+
+    function onSendMail(ev) {
         ev.preventDefault()
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        if (!emailRegex.test(mailDraft.to)){
+        if (!emailRegex.test(mailDraft.to)) {
             showErrorMsg(`'To' email address isn't valid`)
             return
         }
