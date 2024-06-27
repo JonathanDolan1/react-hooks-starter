@@ -1,6 +1,6 @@
 .mail-preview {
     display: grid;
-    grid-template-columns: 15% 75% 10%;
+    grid-template-columns: 20% 70% 10%;
     flex-grow: 0;
     border-block-end: 0.08lh solid lightgray;
     font-size: 0.875rem;
@@ -8,7 +8,7 @@
 
 .mail-preview:hover {
     cursor: pointer;
-    grid-template-columns: 15% 85% 0%;
+    grid-template-columns: 20% 80% 0%;
 }
 
 
