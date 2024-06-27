@@ -69,7 +69,7 @@ function _createEmptyNote() {
     const types = ['NoteText', 'NoteImg', 'NoteTodo', 'NoteVideo']
     const type = types[utilService.getRandomIntInclusive(0, types.length - 1)]
 
-    const bgColors = ['#efeff1', '#e9e3d4', '#f6e2dd', '#d3bfdb', '#aeccdc','#d4e4ed','#b4ddd3','#e2f6d3','#fff8b8','#faafa8']
+    const bgColors = ['#efeff1', '#e9e3d4', '#f6e2dd', '#d3bfdb', '#aeccdc','#d4e4ed','#b4ddd3','#e2f6d3','#faafa8']
     const bgColor = bgColors[utilService.getRandomIntInclusive(0, bgColors.length - 1)]
 
     const imgs = ['195','196','197','198','199','200','201','202','203','204','205','206','207','208','209','210',]

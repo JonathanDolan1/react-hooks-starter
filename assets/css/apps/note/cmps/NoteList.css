@@ -1,4 +1,5 @@
 .note-list {
+    position: relative;
     column-count: auto;
     column-width: 250px;
     column-gap: 20px;
@@ -12,7 +13,16 @@
 }
 
 .note-list > * {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     break-inside: avoid;
+}
+
+.note-list .pin-btn{
+    position: absolute;
+    top: -10px;
+    background-color: transparent;
+    border:none;
+    color: black;
+    
 }
 

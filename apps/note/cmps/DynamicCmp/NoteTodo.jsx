@@ -1,6 +1,6 @@
 import { OptionsBar } from "./OptionBar.jsx"
 
-export function NoteTodo({ note }) {
+export function NoteTodo({note,indexFunc}) {
     const { id, type, createdAt, style, isPinned, info } = note
 
     function onCheck() {
@@ -14,11 +14,11 @@ export function NoteTodo({ note }) {
                 {info.todos.map((todo,idx) =>
                     <li key={idx}>
                         {todo.txt}
-                        <input type="checkbox" onClick={onCheck}/>
+                        <input type="checkbox" onClick={onCheck} name="idx"/>
                     </li>
                 )}
             </ul>
-            <OptionsBar />
+            <OptionsBar note={note} indexFunc={indexFunc}/>
         </article>
     )
 }

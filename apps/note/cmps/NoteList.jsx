@@ -1,6 +1,7 @@
 import { DynamicCmp } from "./DynamicCmp/DynamicCmp.jsx";
 
-export function NoteList({ notes }) {
+export function NoteList(props) {
+    const { notes,...indexFunc } = props
 
     if(!notes || !notes.length) return
 
@@ -8,8 +9,9 @@ export function NoteList({ notes }) {
             <ul className="note-list">
                 {notes.map(note =>
                     <li key={note.id}>
-                        <DynamicCmp note={note}/>
+                        <DynamicCmp note={note} indexFunc={indexFunc}/>
                     </li>
+                    
                 )}
             </ul>
     )

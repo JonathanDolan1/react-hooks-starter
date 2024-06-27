@@ -1,6 +1,6 @@
 .options-bar {
     display: flex;
-    
+    /* width: 100%; */
     flex-direction: row;
     justify-content: end;
     position: relative;
@@ -8,6 +8,7 @@
     /* opacity: 0; */
     
 }
+
 .options-bar:hover {
     opacity: 1;
 }
@@ -21,5 +22,21 @@
 .options-bar button:hover{
 cursor: pointer;
 scale: 1.2;
+
+}
+
+.options-bar div.color-palette {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    position: absolute;
+    bottom: -26px;
+
+}
+
+.options-bar div.color-palette button{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
 
 }
