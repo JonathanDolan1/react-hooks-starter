@@ -3,11 +3,17 @@ import { MailFolderList } from "../cmps/MailFolderList.jsx"
 import { MailList } from "../cmps/MailList.jsx"
 import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
+import { MailDetails } from "../cmps/MailDetails.jsx"
 
 const { useState, useEffect } = React
+const { useParams } = ReactRouterDOM
 
 export function MailIndex() {
     const [mails, setMails] = useState(null)
+    // const [selecetedMail, setSelectedMail] = useState(null)
+
+
+    const { mailId: selectedMailId } = useParams()
 
 
     useEffect(() => {
@@ -22,7 +28,7 @@ export function MailIndex() {
                 mail.removedAt = Date.now()
                 showSuccessMsg(`Mail ${id} archived successfuly`)
             })
-            .catch(err => showErrorMsg('Error archiving the mail: ' , err))
+            .catch(err => showErrorMsg('Error archiving the mail: ', err))
     }
 
     if (!mails) return <section className="loading">Loading...</section>
@@ -30,7 +36,8 @@ export function MailIndex() {
     return (
         <section className="mail-index">
             <MailFolderList />
-            <MailList mails={mails} onArchiveMail={onArchiveMail}/>
+            {!selectedMailId && <MailList mails={mails} onArchiveMail={onArchiveMail} />}
+            {selectedMailId && <MailDetails mailId={selectedMailId} />}
         </section>
     )
 }

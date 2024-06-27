@@ -2,7 +2,6 @@ import { MailPreview } from "./MailPreview.jsx"
 
 export function MailList({mails, onArchiveMail}) {
 
-
     return (
         <table className="mail-list">
             <tbody>
