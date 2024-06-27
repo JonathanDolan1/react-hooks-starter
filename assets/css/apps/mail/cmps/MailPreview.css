@@ -34,6 +34,15 @@
     width: 100%;
 }
 
+.mail-preview:hover .subject-body{
+    width: 82%;
+}
+
+.mail-preview:hover .icons{
+    width: 18%;
+}
+
+
 .mail-preview.unread td:not(:nth-child(2n)),
 .mail-preview.unread td:nth-child(2n) span.subject {
     font-weight: 700;
