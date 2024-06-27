@@ -26,12 +26,15 @@ export function MailIndex() {
         mailService.get(id)
             .then(mail => {
                 mail.removedAt = Date.now()
+                mailService.save(mail)
                 showSuccessMsg(`Mail ${id} archived successfuly`)
             })
             .catch(err => showErrorMsg('Error archiving the mail: ', err))
     }
 
     if (!mails) return <section className="loading">Loading...</section>
+
+    console.log(mails[3])
 
     return (
         <section className="mail-index">
