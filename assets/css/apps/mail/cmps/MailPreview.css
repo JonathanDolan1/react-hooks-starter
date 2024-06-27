@@ -20,13 +20,18 @@
     padding: 1em;
 }
 
-.mail-preview td:first-child,
-.mail-preview .subject-body {
+
+.mail-preview td:first-child a,
+.mail-preview .subject-body a{
     display: block;
     height: 1lh;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.mail-preview .subject-body{
+    width: 100%;
 }
 
 .mail-preview.unread td:not(:nth-child(2n)),

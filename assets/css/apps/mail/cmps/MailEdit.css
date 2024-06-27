@@ -1,4 +1,4 @@
-.mail-edit{
+.mail-edit {
     background-color: white;
     position: fixed;
     bottom: -1lh;
@@ -6,6 +6,61 @@
     width: 35rem;
     height: 34lh;
     border-radius: 10px;
-    box-shadow: 2px 6px 23px -6px rgba(0,0,0,0.75);
-    padding:1em;
+    box-shadow: 2px 6px 23px -6px rgba(0, 0, 0, 0.75);
+    padding: 1em;
+    font-size: 0.875rem;
+}
+
+.mail-edit .title-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-start-start-radius: 10px;
+    border-start-end-radius: 10px;
+    background-color: var(--readMailColor);
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mail-edit .icons {
+    display: flex;
+    gap: 1em;
+}
+
+.mail-edit .mail-edit-form {
+    position: absolute;
+    top: 3lh;
+    width: calc(100% - 2em);
+}
+.mail-edit .to-container, .mail-edit .subject-container{
+    border-block-end: 0.08lh solid rgba(229, 229, 229, 0.844);
+}
+.mail-edit .input-container {
+    padding-block: 1em;
+    display: flex;
+}
+
+.mail-edit label{
+    margin-inline-end: 1em;
+}
+
+.mail-edit input{
+    flex-grow:1;
+    border:none;
+    font-size: inherit;
+}
+
+.mail-edit input:focus{
+    outline: none;
+}
+
+.mail-edit .input-body{
+    width:100%;
+    height: 17.5lh;
+    resize:none;
+    border:none;
+    outline: none;
 }
