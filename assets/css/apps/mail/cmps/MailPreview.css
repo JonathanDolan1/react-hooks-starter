@@ -68,3 +68,9 @@
 .mail-preview:hover td:last-child{
     display: none;
 }
+
+.mail-preview a{
+    display: block;
+    height: 100%;
+    width: 100%;
+}

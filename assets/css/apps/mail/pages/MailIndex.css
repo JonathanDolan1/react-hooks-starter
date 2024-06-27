@@ -1,5 +1,21 @@
 .mail-index{
+    position: relative;
     display: grid;
     grid-template-columns: 15% 85%;
     font-family: sans-serif;
+}
+
+.mail-index .btn-edit-mail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    height: 3.5rem;
+    width: 60%;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #c2e7fe;
+    border: 0px solid rgba(0,0,0,0);
+    border-radius: 10px;
+    cursor: pointer;
 }

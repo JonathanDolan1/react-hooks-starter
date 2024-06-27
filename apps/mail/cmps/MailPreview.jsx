@@ -36,6 +36,8 @@ export function MailPreview({ mail, onArchiveMail }) {
 
 
     const readClass = mail.isRead ? 'read' : 'unread'
+    const readTitle = mail.isRead ? 'unread' : 'read'
+    const archiveTitle = mail.removedAt ? 'restore' : 'archive'
 
     return (
         <tr className={`mail-preview ${readClass}`}>
@@ -49,9 +51,9 @@ export function MailPreview({ mail, onArchiveMail }) {
                     </Link>
                 </div>
                 <span onClick={(ev) => ev.stopPropagation()} className="icons">
-                    <i onClick={() => onArchiveMail(mail.id)} className="fa-solid fa-box-archive"></i>
-                    <i className="fa-regular fa-trash-can"></i>
-                    <i className="fa-regular fa-envelope"></i>
+                    <i onClick={() => onArchiveMail(mail.id)} className="fa-solid fa-box-archive" title={archiveTitle}></i>
+                    <i className="fa-regular fa-trash-can" title="delete"></i>
+                    <i className="fa-regular fa-envelope" title={`mark as ${readTitle}`}></i>
                 </span>
             </td>
             <td className="date">{formatTimestamp(mail.sentAt)}</td>
