@@ -1,15 +1,18 @@
+import { mailDemoDataService } from "../services/mail-demo-data.service.js"
 import { mailService } from "../services/mail.service.js"
 
 const { Link } = ReactRouterDOM
 
 export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, onStarClicked }) {
 
-    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from } = mail
+    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to } = mail
 
     const starredClass = isStarred ? 'starred' : 'not-starred'
     const readClass = isRead ? 'read' : 'unread'
     const readTitle = isRead ? 'unread' : 'read'
     const archiveTitle = removedAt ? 'Restore' : 'Archive'
+    const isDraft = !sentAt ? true : false
+    const isIn = to === mailDemoDataService.getLoggedInUser().email ? true : false
 
     return (
         <tr className={`mail-preview ${readClass}`}>
@@ -17,7 +20,11 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, o
             <td className="star-icon-address">
                 {!isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-regular fa-star`} title={starredClass}></i>}
                 {isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-solid fa-star`} title={starredClass}></i>}
-                <Link to={id}>{from}</Link>
+                <Link to={id}>
+                    {(isIn ? from : to)}
+                    {isDraft && to && ', '}
+                    {isDraft && <span className="span-draft">Draft</span>}
+                </Link>
             </td>
             <td className="subject-body-icons">
                 <div className="subject-body">

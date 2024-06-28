@@ -38,6 +38,8 @@ function query(searchParams = {}) {
             }
 
             switch (folder) {
+                case 'all':
+                    break
                 case '':
                 case 'inbox':
                     mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
