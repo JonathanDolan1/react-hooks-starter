@@ -3,13 +3,12 @@ import { mailService } from "../services/mail.service.js"
 
 const { Link } = ReactRouterDOM
 
-export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, onStarClicked }) {
+export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadStatus, onStarClicked }) {
 
     const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to, createdAt } = mail
 
     const starredClass = isStarred ? 'starred' : 'not-starred'
     const readClass = isRead ? 'read' : 'unread'
-    const readTitle = isRead ? 'unread' : 'read'
     const archiveTitle = removedAt ? 'Restore' : 'Archive'
     const isDraft = !sentAt ? true : false
     const isIn = to === mailDemoDataService.getLoggedInUser().email ? true : false
@@ -36,7 +35,8 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, o
                 <span onClick={(ev) => ev.stopPropagation()} className="icons">
                     <i onClick={() => onArchiveMail(id)} className="icon arhcive-icon fa-solid fa-box-archive" title={archiveTitle}></i>
                     <i onClick={() => onRemoveMail(id)} className="icon delete-icon fa-regular fa-trash-can" title="Delete"></i>
-                    <i onClick={() => onMarkAsRead(id)} className="icon mark-as-read-icon fa-regular fa-envelope" title={`Mark as ${readTitle}`}></i>
+                    {!isRead && <i onClick={() => onToggleReadStatus(id)} className="icon mark-as-read-icon fa-regular fa-envelope-open" title='Mark as read'></i>}
+                    {isRead && <i onClick={() => onToggleReadStatus(id)} className="icon mark-as-read-icon fa-regular fa-envelope" title='Mark as unread'></i>}
                 </span>
             </td>
             <td className="date">{mailService.formatTimestamp(isDraft ? createdAt : sentAt)}</td>

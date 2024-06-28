@@ -61,7 +61,7 @@ export function MailIndex() {
         setMails(prevMails => prevMails.filter(mail => mail.id !== id))
     }
 
-    function onMarkAsRead(id) {
+    function onToggleReadStatus(id) {
         updateMailState(id, 'isRead')
     }
 
@@ -117,7 +117,7 @@ export function MailIndex() {
                         <MailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                         <MailSort sortBy={selectedSort} onSetSort={onSetSort} />
                     </div>
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} onStarClicked={onStarClicked} />
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onToggleReadStatus={onToggleReadStatus} onStarClicked={onStarClicked} />
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}
