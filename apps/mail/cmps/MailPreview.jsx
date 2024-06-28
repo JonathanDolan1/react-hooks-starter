@@ -1,6 +1,6 @@
 const { Link } = ReactRouterDOM
 
-export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead }) {
+export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, onStarClicked }) {
 
     function formatTimestamp(timestamp) {
         if (!timestamp) return 'NO DATE'
@@ -35,14 +35,19 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead })
     }
 
 
+    const starredClass = mail.isStarred ? 'starred' : 'not-starred'
     const readClass = mail.isRead ? 'read' : 'unread'
     const readTitle = mail.isRead ? 'unread' : 'read'
-    const archiveTitle = mail.removedAt ? 'restore' : 'archive'
+    const archiveTitle = mail.removedAt ? 'Restore' : 'Archive'
 
     return (
         <tr className={`mail-preview ${readClass}`}>
 
-            <td className="address"><Link to={mail.id}>{mail.from}</Link></td>
+            <td className="star-icon-address">
+                {!mail.isStarred && <i onClick={() => onStarClicked(mail.id)} className={`icon star-icon ${starredClass} fa-regular fa-star`} title={starredClass}></i>}
+                {mail.isStarred && <i onClick={() => onStarClicked(mail.id)} className={`icon star-icon ${starredClass} fa-solid fa-star`} title={starredClass}></i>}
+                <Link to={mail.id}>{mail.from}</Link>
+            </td>
             <td className="subject-body-icons">
                 <div className="subject-body">
                     <Link to={mail.id}>
@@ -51,9 +56,9 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead })
                     </Link>
                 </div>
                 <span onClick={(ev) => ev.stopPropagation()} className="icons">
-                    <i onClick={() => onArchiveMail(mail.id)} className="fa-solid fa-box-archive" title={archiveTitle}></i>
-                    <i onClick={() => onRemoveMail(mail.id)} className="fa-regular fa-trash-can" title="delete"></i>
-                    <i onClick={() => onMarkAsRead(mail.id)} className="fa-regular fa-envelope" title={`mark as ${readTitle}`}></i>
+                    <i onClick={() => onArchiveMail(mail.id)} className="icon arhcive-icon fa-solid fa-box-archive" title={archiveTitle}></i>
+                    <i onClick={() => onRemoveMail(mail.id)} className="icon delete-icon fa-regular fa-trash-can" title="Delete"></i>
+                    <i onClick={() => onMarkAsRead(mail.id)} className="icon mark-as-read-icon fa-regular fa-envelope" title={`Mark as ${readTitle}`}></i>
                 </span>
             </td>
             <td className="date">{formatTimestamp(mail.sentAt)}</td>

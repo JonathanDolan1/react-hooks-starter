@@ -10,7 +10,7 @@ export function MailDetails({ mailId }) {
     useEffect(() => {
         mailService.get(mailId)
             .then(setMail)
-            .catch(err => showErrorMsg('error fetching the mail :', err))
+            .catch(err => showErrorMsg('error fetching the mail:' + err))
     }, [])
 
     if (!mail) return <section className="loading">Loading...</section>

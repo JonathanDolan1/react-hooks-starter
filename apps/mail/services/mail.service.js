@@ -20,13 +20,14 @@ export const mailService = {
 
 function query(searchParams = {}) {
 
+
     return storageService.query(MAIL_KEY)
         .then(mails => {
 
             const { filterBy, sortBy } = searchParams
 
-            const { folder, txt, isRead , isStarred} = { ...filterBy }
-
+            const { folder, txt, isRead, isStarred } = { ...filterBy }
+            
             if (isStarred) mails = mails.filter(mail => mail.isStarred === isStarred)
 
             if (txt) {
@@ -36,8 +37,8 @@ function query(searchParams = {}) {
                 )
             }
 
-            if (!folder) folder = 'inbox'
             switch (folder) {
+                case '':
                 case 'inbox':
                     mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
                     break
@@ -51,6 +52,7 @@ function query(searchParams = {}) {
                     mails = mails.filter(mail => !mail.sentAt)
                     break
             }
+            
 
             if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
@@ -74,6 +76,7 @@ function query(searchParams = {}) {
 
             return mails
         })
+        .catch(err=>showErrorMsg('Error fetching mails: ' + err))
 
 }
 

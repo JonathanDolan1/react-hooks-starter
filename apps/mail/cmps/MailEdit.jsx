@@ -13,7 +13,7 @@ export function MailEdit({ setMails }) {
     useEffect(() => {
         mailService.get(searchParams.get('mailDraftId'))
             .then(setMailDraft)
-            .catch(err => showErrorMsg('Error fetching mail draft: ', err))
+            .catch(err => showErrorMsg('Error fetching mail draft: ' + err))
     }
         , [])
 
@@ -30,7 +30,7 @@ export function MailEdit({ setMails }) {
 
     function onSaveMailDraft(mail) {
         mailService.save(mail)
-            .catch(err => showErrorMsg('Error saving the draft: ', err))
+            .catch(err => showErrorMsg('Error saving the draft: ' + err))
     }
 
     function onCloseEdit() {

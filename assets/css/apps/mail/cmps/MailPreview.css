@@ -24,6 +24,18 @@
     padding: 1em;
 }
 
+.mail-preview td:first-child{
+    display: flex;
+    gap: 1em;
+}
+
+.mail-preview .star-icon.starred{
+    color: var(--starredColor)
+}
+
+.mail-preview .star-icon.not-starred{
+    color: var(--notStarredColor)
+}
 
 .mail-preview td:first-child a,
 .mail-preview .subject-body a{

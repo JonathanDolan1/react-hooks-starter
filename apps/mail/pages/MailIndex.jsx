@@ -31,7 +31,7 @@ export function MailIndex() {
     function loadMails() {
         mailService.query({ filterBy, sortBy })
             .then(setMails)
-            .catch(err => showErrorMsg('Error fetching mails from storage: ', err))
+            .catch(err => showErrorMsg('Error fetching mails from storage: ' + err))
     }
 
     function onAddMail() {
@@ -45,7 +45,7 @@ export function MailIndex() {
                 setMails(prevMails => prevMails.filter(mail => mail.id !== id))
                 showSuccessMsg(`Mail ${id} removed successfuly`)
             })
-            .catch(err => showErrorMsg(`Error removing mail ${id}: `, err))
+            .catch(err => showErrorMsg(`Error removing mail ${id}: ` + err))
     }
 
     function onArchiveMail(id) {
@@ -56,7 +56,7 @@ export function MailIndex() {
                 mailService.save(mail)
                 showSuccessMsg(`Mail ${id} ${archiveRestoreStr} successfuly`)
             })
-            .catch(err => showErrorMsg('Error archiving the mail: ', err))
+            .catch(err => showErrorMsg('Error archiving the mail: ' + err))
     }
 
     function onMarkAsRead(id) {
@@ -65,11 +65,25 @@ export function MailIndex() {
                 mail.isRead = !mail.isRead
                 mailService.save(mail)
                     .then(mail => {
-                        if (!filterBy.isRead) setMails(prevMails => { [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] })
+                        if (!filterBy.isRead) setMails(prevMails =>  [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] )
                         else loadMails()
                     })
             })
-            .catch(err => showErrorMsg(`Error marking the mail as un/read: `, err))
+            .catch(err => showErrorMsg(`Error marking the mail as un/read: ` + err))
+    }
+
+    function onStarClicked(id){
+        mailService.get(id)
+        .then(mail => {
+            mail.isStarred = !mail.isStarred
+            // console.log(mail.isStarred);
+            mailService.save(mail)
+                .then(mail => {
+                    if (!filterBy.isStarred) setMails(prevMails =>  [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] )
+                    else loadMails()
+                })
+        })
+        .catch(err => showErrorMsg(`Error star marking: ` + err))
     }
 
     function onSetFilter(filterBy) {
@@ -98,7 +112,7 @@ export function MailIndex() {
                         <MailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
                         <MailSort sortBy={selectedSort} onSetSort={onSetSort} />
                     </div>
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} onStarClicked={onStarClicked} />
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}

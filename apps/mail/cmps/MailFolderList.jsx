@@ -9,7 +9,7 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
     }
 
     return (
-        <ul className={`mail-folder-list clean-list ${selectedFolder}`}>
+        <ul className={`mail-folder-list clean-list ${selectedFolder || 'inbox'}`}>
             <li className="mail-folder-container inbox">
                 <input onChange={onFolderClicked} type="radio" name="folder" id="inbox" value="inbox" readOnly/>
                 <label htmlFor="inbox"><i className="icon fa-solid fa-inbox"></i><span>Inbox</span></label>
