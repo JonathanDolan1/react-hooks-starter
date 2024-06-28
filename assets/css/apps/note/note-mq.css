@@ -9,6 +9,7 @@
 
     .note-insert-container {
         position: relative;
+        left: 12px;
 
     }
     .note-input-icons {
@@ -17,5 +18,9 @@
         left: 100px;
         height: 50%;        
         
+    }
+    .note-header-icons {
+        position: relative;
+        left: 50px;
     }
 }

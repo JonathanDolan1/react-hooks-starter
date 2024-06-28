@@ -19,7 +19,11 @@ export function NoteOptionBar({note,indexFunc}) {
     }
 
     function onSend() {
+        //note content
+        //note title
+
         console.log('onSend')
+        // indexFunc.onCreateDraftFromNote(note.Title,note.info)
     }
 
     function onColorClick(color) {
@@ -29,6 +33,8 @@ export function NoteOptionBar({note,indexFunc}) {
     function onPinClick() {
         indexFunc.onPin(note.id, !isPinned)
     }
+
+    
 
     const pinStyle = (isPinned)? {color:'yellow'} : {}
     const vidStyle = (type==='NoteVideo')? {backgroundColor:'#d3d3d3', opacity:0.7} :{}

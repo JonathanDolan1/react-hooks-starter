@@ -5,6 +5,10 @@ import { NoteSideBar } from "../cmps/NoteSideBar.jsx"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { NoteInsertBar } from "../cmps/NoteInsertBar.jsx"
 import { NoteHeader } from "../cmps/NoteHeader.jsx"
+// import {mailService} from '../../mail/services/mail.service.js'
+
+// const { useParams, useNavigate, Link } = ReactRouterDOM
+// const navigate = useNavigate()
 
 const { useState, useEffect, useRef } = React
 
@@ -87,6 +91,17 @@ export function NoteIndex() {
         return
     }
 
+    //note to mail function 
+    // function onCreateDraftFromNote(noteTitle = 'from note', noteContent) {
+    //     mailService.save(mailService.getNewMail())
+    //         .then(mail => {
+    //             mail.subject = noteTitle
+    //             mail.body = noteContent
+    //             mailService.save(mail)
+    //                 .then(()=>navigate(`http://127.0.0.1:5504/index.html/mail/list?mailDraftId=${mail.id}`))
+    //         })
+    // }
+
     if (!notes) return <div>Loading...</div>
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unPinnedNotes = notes.filter(note => !note.isPinned)
@@ -96,7 +111,7 @@ export function NoteIndex() {
             <NoteSideBar changeFilter={changeFilter}/>
             <NoteInsertBar setNotes={setNotes}/>
             <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} />
-            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} />
+            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin}/>
         </section>
     )
 }
