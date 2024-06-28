@@ -1,6 +1,7 @@
 .note-list {
     position: relative;
     column-count: auto;
+    column-fill: balance;
     column-width: 250px;
     column-gap: 20px;
     
@@ -8,7 +9,8 @@
 
     list-style: none;
     padding: 0;
-    margin: 20px;
+    margin-inline-end: 40px;
+    margin-inline-start: 80px;
     
 }
 

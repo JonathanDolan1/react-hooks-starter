@@ -1,0 +1,31 @@
+.note-sidebar {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    width: 40px;
+    gap: 30px;
+    align-items: center;
+    
+}
+
+.note-sidebar > *{
+    font-size: 25px;
+    padding: 15px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: rgb(95, 99, 104);
+}
+
+.note-sidebar > *:hover{
+    background-color:rgb(241, 243, 244);
+
+}
+
+.note-sidebar > *.active{
+    background-color:rgb(254, 239, 195);
+}
+

@@ -2,7 +2,6 @@ import { DynamicCmp } from "./DynamicCmp/DynamicCmp.jsx";
 
 export function NoteList(props) {
     const { notes,...indexFunc } = props
-
     if(!notes || !notes.length) return
 
     return (

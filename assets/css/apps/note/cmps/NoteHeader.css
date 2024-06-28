@@ -1,0 +1,94 @@
+.note-header-container {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    top: 0;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-inline-end: 40px;
+    
+    
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    background-color: white;
+}
+
+.note-header-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 25px;
+    padding-inline: 25px;
+    font-size: 20px;
+    color: grey;
+}
+
+.note-header-icons>* {
+    cursor: pointer;
+}
+
+.notes-header-user-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 35px;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+
+    font-family: roboto-regular;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(51, 105, 30);
+}
+
+.note-header-search {
+    position: relative;
+    height: 60%;
+    width: 100%;
+
+    border-radius: 6px;
+    border: none;
+
+    padding-inline-start: 20px;
+
+    font-family: roboto-regular;
+    font-size: 16px;
+    color: grey;
+
+    background-color: rgb(241, 243, 244);
+
+}
+
+.note-header-search:hover {
+    cursor: text;
+}
+
+.note-header-search:focus-visible {
+    outline: none;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px grey;
+
+}
+
+.note-header-logo-cotainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.note-header-logo {
+    display: block;
+    font-family: roboto-regular;
+    font-size: 25px;
+    color: rgb(95, 99, 104);
+}
+
+.note-header-logo-cotainer img {
+    margin-inline-end: 30px;
+}

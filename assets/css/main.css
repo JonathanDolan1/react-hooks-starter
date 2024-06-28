@@ -33,11 +33,15 @@
 /* Note Cmps */
 @import './apps/note/cmps/NoteImg.css';
 @import './apps/note/cmps/NoteList.css';
-@import './apps/note/cmps/NoteSearchBar.css';
 @import './apps/note/cmps/NoteText.css';
 @import './apps/note/cmps/NoteTodo.css';
 @import './apps/note/cmps/NoteVideo.css';
-@import './apps/note/cmps/OptionBar.css';
+@import './apps/note/cmps/NoteSideBar.css';
+@import './apps/note/cmps/NoteOptionBar.css';
+@import './apps/note/cmps/NoteInsertBar.css';
+@import './apps/note/cmps/NoteHeader.css';
+
+@import './apps/note/note-mq.css';
 
 /* Mail Cmps */
 

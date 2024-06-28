@@ -1,5 +1,5 @@
 
-import { OptionsBar } from "./OptionBar.jsx"
+import { NoteOptionBar } from "./NoteOptionBar.jsx"
 
 export function NoteImg({note,indexFunc}) {
     const { id, type, createdAt, style, isPinned, info } = note
@@ -7,7 +7,7 @@ export function NoteImg({note,indexFunc}) {
     return (
         <article className ="note-img" style={style}>
              <img src={info.url}/>
-             <OptionsBar note={note} indexFunc={indexFunc}/>
+             <NoteOptionBar note={note} indexFunc={indexFunc}/>
         </article>
     )
 }
