@@ -1,5 +1,5 @@
 
-import { OptionsBar } from "./OptionBar.jsx"
+import { NoteOptionBar } from "./NoteOptionBar.jsx"
 
 export function NoteText({note,indexFunc}) {
     const { id, type, createdAt, style, isPinned, info } = note
@@ -8,7 +8,7 @@ export function NoteText({note,indexFunc}) {
     return (
         <article className ="note-text" style={style}>
              <h4>{info.txt}</h4>
-             <OptionsBar note={note} indexFunc={indexFunc}/>
+             <NoteOptionBar note={note} indexFunc={indexFunc}/>
              
         </article>
     )

@@ -1,0 +1,21 @@
+@media (max-width: 540px) {
+    .note-header-search {
+        display: none;
+    }
+
+    .notes-header-user-icon {
+        display: none;
+    }
+
+    .note-insert-container {
+        position: relative;
+
+    }
+    .note-input-icons {
+        position: absolute;
+        top: 60px;
+        left: 100px;
+        height: 50%;        
+        
+    }
+}

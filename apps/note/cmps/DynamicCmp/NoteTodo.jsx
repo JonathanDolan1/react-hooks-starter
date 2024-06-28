@@ -1,4 +1,4 @@
-import { OptionsBar } from "./OptionBar.jsx"
+import { NoteOptionBar } from "./NoteOptionBar.jsx"
 
 export function NoteTodo({note,indexFunc}) {
     const { id, type, createdAt, style, isPinned, info } = note
@@ -18,7 +18,7 @@ export function NoteTodo({note,indexFunc}) {
                     </li>
                 )}
             </ul>
-            <OptionsBar note={note} indexFunc={indexFunc}/>
+            <NoteOptionBar note={note} indexFunc={indexFunc}/>
         </article>
     )
 }

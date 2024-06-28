@@ -1,38 +1,40 @@
 const { useState} = React
 
-export function OptionsBar({note,indexFunc}) {
-
-    const [isVisible, setIsVisible] = useState(false);
+export function NoteOptionBar({note,indexFunc}) {
 
     const {isPinned, type} = note
-    // console.log(indexFunc)
-
+    const [isVisible, setIsVisible] = useState(false);
+    
     const toggleVisibility = () => {
         setIsVisible(!isVisible)
       }
     
     function onDelete() {
-        console.log('onDelete')
+        // console.log('onDelete')
         indexFunc.onDelete(note.id)
     }
+
     function onEdit() {
         console.log('onEdit')
     }
+
     function onSend() {
         console.log('onSend')
     }
+
     function onColorClick(color) {
         indexFunc.changeColor(note.id,color)
     }
-    function onPin() {
-        console.log('onPin')
+
+    function onPinClick() {
+        indexFunc.onPin(note.id, !isPinned)
     }
 
     const pinStyle = (isPinned)? {color:'yellow'} : {}
     const vidStyle = (type==='NoteVideo')? {backgroundColor:'#d3d3d3', opacity:0.7} :{}
     return (
         <div className="options-bar" style={vidStyle}>
-            <button style={pinStyle} onClick={onPin}><i className="fa-solid fa-thumbtack"></i></button>
+            <button style={pinStyle} onClick={onPinClick}><i className="fa-solid fa-thumbtack"></i></button>
             <button onClick={toggleVisibility}><i className="fa-solid fa-palette"></i></button>
             <button onClick={onSend}><i className="fa-solid fa-envelope"></i></button>
             <button onClick={onEdit}><i className="fa-solid fa-pen-to-square"></i></button>
