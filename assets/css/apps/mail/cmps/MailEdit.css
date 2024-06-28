@@ -51,6 +51,12 @@
     flex-grow:1;
     border:none;
     font-size: inherit;
+    background-color: white;
+}
+
+.mail-edit input:disabled{
+    background-color: white;
+    color:black
 }
 
 .mail-edit input:focus{

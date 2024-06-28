@@ -1,6 +1,6 @@
 const { Link } = ReactRouterDOM
 
-export function MailPreview({ mail, onArchiveMail ,onMarkAsRead}) {
+export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead }) {
 
     function formatTimestamp(timestamp) {
         if (!timestamp) return 'NO DATE'
@@ -52,14 +52,11 @@ export function MailPreview({ mail, onArchiveMail ,onMarkAsRead}) {
                 </div>
                 <span onClick={(ev) => ev.stopPropagation()} className="icons">
                     <i onClick={() => onArchiveMail(mail.id)} className="fa-solid fa-box-archive" title={archiveTitle}></i>
-                    <i className="fa-regular fa-trash-can" title="delete"></i>
-                    <i onClick={()=>onMarkAsRead(mail.id)} className="fa-regular fa-envelope" title={`mark as ${readTitle}`}></i>
+                    <i onClick={() => onRemoveMail(mail.id)} className="fa-regular fa-trash-can" title="delete"></i>
+                    <i onClick={() => onMarkAsRead(mail.id)} className="fa-regular fa-envelope" title={`mark as ${readTitle}`}></i>
                 </span>
             </td>
             <td className="date">{formatTimestamp(mail.sentAt)}</td>
         </tr>
-
-
-        // <tr>{JSON.stringify(mail)}</tr>
     )
 }

@@ -1,3 +1,21 @@
+.mail-folder-list{
+    display: flex;
+    flex-direction: column;
+    height: 3.5rem;
+    width: 90%;
+    font-size: 0.875rem;
+}
+
+.mail-folder-list label{
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+}
+
+.mail-folder-list .icon{
+    width: 15px;
+}
+
 .mail-folder-list input{
     display: none;
 }
@@ -8,4 +26,20 @@
 
 .mail-folder-list label:hover{
     cursor: pointer;
+}
+
+.mail-folder-list.inbox li.inbox{
+    font-weight: 700;
+}
+
+.mail-folder-list.sent li.sent{
+    font-weight: 700;
+}
+
+.mail-folder-list.trash li.trash{
+    font-weight: 700;
+}
+
+.mail-folder-list.drafts li.drafts{
+    font-weight: 700;
 }

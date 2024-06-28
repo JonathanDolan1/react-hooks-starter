@@ -10,21 +10,22 @@ export const mailDemoDataService = {
     getLoggedInUser
 }
 
-function getLoggedInUser(){
+function getLoggedInUser() {
     return loggedinUser
 }
 
-function createDemoMails(length = 10) {
+function createDemoMails(length = 20) {
     const mails = []
     for (var i = 0; i < length; i++) {
-        const mail = {
+        let mail = {
             id: utilService.makeId(),
             subject: _generateRandomSubject(),
             body: _generateRandomBody(),
             isRead: _getRandomTrueFalse(),
             ..._getRandomFromAndTo(),
-            ..._generateTimestamps()
         }
+        const timestamps = _generateTimestamps(mail.to)
+        mail = {...mail,...timestamps}
         mails.push(mail)
     }
     return mails
@@ -62,15 +63,15 @@ function _generateRandomBody() {
         'The primary purpose of this email is to convey vital and noteworthy information to you, with the hope that it will provide you with a deeper understanding of the recent developments regarding...',
         'I would be deeply appreciative if you could dedicate a few moments of your valuable time to address an inquiry I have, concerning a topic that has been the subject of much contemplation on my part, namely...',
         'I am writing to you today as a follow-up to our previous exchange of thoughts and ideas, during which we delved into the intricate and fascinating world of...'
-      ];
-    
-      const signOffOptions = [
+    ];
+
+    const signOffOptions = [
         'In closing, I would like to express my sincere gratitude for your time and consideration. Your response is greatly anticipated, as I eagerly look forward to the potential insights and knowledge it may bring.',
         'Should you require any additional details, clarifications, or have any concerns that you would like to address, please do not hesitate to reach out. Your feedback is invaluable and always appreciated.',
         'It has been an absolute pleasure to correspond with you on this matter. I eagerly anticipate the continued collaboration and exchange of ideas that lies ahead, as we navigate the intricate landscape of our shared interests.',
         'May the remainder of your day be as productive and rewarding as it has undoubtedly been thus far, and may your endeavors continue to yield great success.',
         'As we move forward, kindly keep me informed of any updates, changes, or new developments that may arise, so that we may continue to adapt and grow together in our shared pursuit of excellence.'
-      ];
+    ];
 
     const randomStartIndex = Math.floor(Math.random() * sentenceOptions.length)
     const startSentence = sentenceOptions[randomStartIndex]
@@ -83,20 +84,20 @@ function _generateRandomBody() {
 
 function _generateRandomName() {
     const firstNames = [
-      'John', 'Jane', 'Paul', 'Emma', 'Mark', 'Olivia', 'William', 'Sophia', 'Michael', 'Ava'
+        'John', 'Jane', 'Paul', 'Emma', 'Mark', 'Olivia', 'William', 'Sophia', 'Michael', 'Ava'
     ];
     const lastNames = [
-      'Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'
+        'Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'
     ];
-  
+
     const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);
     const firstName = firstNames[randomFirstNameIndex];
-  
+
     const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);
     const lastName = lastNames[randomLastNameIndex];
-  
+
     return `${firstName} ${lastName}`;
-  }
+}
 
 function _getRandomTrueFalse() {
     return utilService.getRandomIntInclusive(1, 10) > 5 ? true : false
@@ -126,27 +127,27 @@ function _getRandomFromAndTo() {
     }
 }
 
-function _generateTimestamps() {
-    const createdAt = _generateRandomTimestamp(); 
+function _generateTimestamps(to) {
+    const createdAt = _generateRandomTimestamp();
     let sentAt
     let removedAt
-    
-    const sentAtChanceOfNull = Math.random() < 0.2;
 
-    if (sentAtChanceOfNull) {
-        sentAt = null; 
-        removedAt = null;
+    // const sentAtChanceOfNull = Math.random() < 0.2;
+
+    if (to !== loggedinUser.email && (Math.random() < 0.2)) {
+        sentAt = null;
+        // removedAt = null;
     } else {
-        
+
         sentAt = createdAt + Math.floor(Math.random() * (Date.now() - createdAt));
 
-        
-        const removedAtChanceOfNull = Math.random() < 0.2;
+
+        const removedAtChanceOfNull = Math.random() > 0.2;
 
         if (removedAtChanceOfNull) {
-            removedAt = null; 
+            removedAt = null;
         } else {
-            
+
             removedAt = sentAt + Math.floor(Math.random() * (Date.now() - sentAt));
         }
     }

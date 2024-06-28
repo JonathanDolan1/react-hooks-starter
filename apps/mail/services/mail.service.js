@@ -12,21 +12,29 @@ export const mailService = {
     save,
     getNewMail,
     // getDefaultFilter,
-    // getFilterFromSearchParams
+    getFilterFromSearchParams
 }
 
 
 function query(filterBy = {}) {
     return storageService.query(MAIL_KEY)
         .then(mails => {
-
-            // if (filterBy.txt) {
-            //     const regExp = new RegExp(filterBy.txt, 'i')
-            //     mails = mails.filter(mail => regExp.test(mail.vendor))
-            // }
-            // if (filterBy.minSpeed) {
-            //     mails = mails.filter(mail => mail.speed >= filterBy.minSpeed)
-            // }
+            if (filterBy.folder) {
+                switch (filterBy.folder) {
+                    case 'inbox':
+                        mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
+                        break
+                    case 'sent':
+                        mails = mails.filter(mail => mail.from === mailDemoDataService.getLoggedInUser().email && mail.sentAt)
+                        break
+                    case 'trash':
+                        mails = mails.filter(mail => mail.removedAt)
+                        break
+                    case 'drafts':
+                        mails = mails.filter(mail => !mail.sentAt)
+                        break
+                }
+            }
             return mails
         })
 }
@@ -65,31 +73,24 @@ function getNewMail(
 // }
 
 
-// function getFilterFromSearchParams(searchParams) {
-//     // return Object.fromEntries(searchParams)
-//     const txt = searchParams.get('txt') || ''
-//     const minSpeed = searchParams.get('minSpeed') || ''
-//     return {
-//         txt,
-//         minSpeed
-//     }
-// }
+function getFilterFromSearchParams(searchParams) {
+    // return Object.fromEntries(searchParams)
+    const folder = searchParams.get('folder') || ''
+    // const minSpeed = searchParams.get('minSpeed') || ''
+    return {
+        folder,
+        // minSpeed
+    }
+}
 
 
 function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
-        mails = mailDemoDataService.createDemoMails()
+        mails = mailDemoDataService.createDemoMails(50)
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
-
-// function _createMail(vendor, speed = 250) {
-//     const mail = getNewMail(vendor, speed)
-//     mail.id = utilService.makeId()
-//     return mail
-// }
-
 
 function _setNextPrevMailId(mail) {
     return storageService.query(MAIL_KEY).then((mails) => {
@@ -100,8 +101,4 @@ function _setNextPrevMailId(mail) {
         mail.prevMailId = prevMail.id
         return mail
     })
-}
-
-function getLoggedInUser(){
-    return loggedinUser
 }
