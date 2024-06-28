@@ -7,12 +7,10 @@ import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.servic
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 
-
 const { useState, useEffect } = React
 const { useParams, useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
-
 
     const { mailId: selectedMailId } = useParams()
 
@@ -21,7 +19,6 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
     const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
-
 
     useEffect(() => {
         loadMails()
@@ -60,7 +57,7 @@ export function MailIndex() {
             .catch(err => showErrorMsg('Error archiving the mail: ' + err))
     }
 
-    function unrenderMail(id){
+    function unrenderMail(id) {
         setMails(prevMails => prevMails.filter(mail => mail.id !== id))
     }
 

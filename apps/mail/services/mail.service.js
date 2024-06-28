@@ -14,9 +14,9 @@ export const mailService = {
     getNewMail,
     getFilterFromSearchParams,
     getSortFromSearchParams,
+    formatTimestamp
     // getDefaultFilter,
 }
-
 
 function query(searchParams = {}) {
 
@@ -145,6 +145,38 @@ function _createMails() {
         mails = mailDemoDataService.createDemoMails(50)
         utilService.saveToStorage(MAIL_KEY, mails)
     }
+}
+
+function formatTimestamp(timestamp) {
+    if (!timestamp) return 'NO DATE'
+    const date = new Date(timestamp);
+
+    // Check if the timestamp is within the current day
+    const currentDate = new Date().toDateString();
+    if (date.toDateString() === currentDate) {
+        let hours = date.getHours()
+        const ampm = hours < 12 ? "AM" : "PM"
+        hours = hours % 12
+        hours = hours ? hours : 12
+        const minutes = date.getMinutes()
+        const formattedMinutes = minutes < 10 ? "0" + minutes : minutes
+        return `${hours}:${formattedMinutes} ${ampm}`
+    }
+
+    // Check if the timestamp is within the current year
+    const currentYear = new Date().getFullYear()
+    if (date.getFullYear() === currentYear) {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        const month = monthNames[date.getMonth()]
+        const day = date.getDate()
+        return `${month} ${day}`
+    }
+
+    // Default format: m/d/yy
+    const month = (date.getMonth() + 1).toString()
+    const day = date.getDate().toString()
+    const year = date.getFullYear().toString().substr(2, 2)
+    return `${month}/${day}/${year}`
 }
 
 // function _setNextPrevMailId(mail) {
