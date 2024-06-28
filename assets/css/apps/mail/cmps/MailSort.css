@@ -2,10 +2,10 @@
     margin-inline-end: 2.4%;
 }
 
-.mail-sort .mail-sort-dir-list{
+.mail-sort .mail-sort-list{
     display: flex;
 }
 
-.mail-sort .sort-dir-input{
+.mail-sort .sort-dir{
     cursor: pointer;
 }

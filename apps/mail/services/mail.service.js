@@ -53,6 +53,9 @@ function query(searchParams = {}) {
                 case 'date':
                     mails = mails.toSorted((m1, m2) => (m1.sentAt - m2.sentAt) * -sortDir)
                     break
+                case 'subject':
+                    mails = mails.toSorted((m1, m2) => m1.subject.localeCompare(m2.subject) * sortDir)
+                    break
             }
 
 
