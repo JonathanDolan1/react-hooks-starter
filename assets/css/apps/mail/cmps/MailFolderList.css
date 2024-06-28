@@ -43,3 +43,7 @@
 .mail-folder-list.drafts li.drafts{
     font-weight: 700;
 }
+
+.mail-folder-list.all li.all{
+    font-weight: 700;
+}

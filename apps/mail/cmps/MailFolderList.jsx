@@ -26,6 +26,10 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
                 <input onChange={onFolderClicked} type="radio" name="folder" id="drafts" value="drafts" readOnly/>
                 <label htmlFor="drafts"><i className="icon fa-solid fa-file"></i><span>Drafts</span></label>
             </li>
+            <li className="mail-folder-container all">
+                <input onChange={onFolderClicked} type="radio" name="folder" id="all" value="all" readOnly/>
+                <label htmlFor="all"><i className="icon fa-solid fa-envelopes-bulk"></i><span>All Mail</span></label>
+            </li>
         </ul>
     )
 

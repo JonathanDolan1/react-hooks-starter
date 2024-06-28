@@ -5,7 +5,7 @@ const { Link } = ReactRouterDOM
 
 export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, onStarClicked }) {
 
-    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to } = mail
+    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to, createdAt } = mail
 
     const starredClass = isStarred ? 'starred' : 'not-starred'
     const readClass = isRead ? 'read' : 'unread'
@@ -39,7 +39,7 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onMarkAsRead, o
                     <i onClick={() => onMarkAsRead(id)} className="icon mark-as-read-icon fa-regular fa-envelope" title={`Mark as ${readTitle}`}></i>
                 </span>
             </td>
-            <td className="date">{mailService.formatTimestamp(sentAt)}</td>
+            <td className="date">{mailService.formatTimestamp(isDraft ? createdAt : sentAt)}</td>
         </tr>
     )
 }
