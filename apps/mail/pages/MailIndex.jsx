@@ -24,8 +24,6 @@ export function MailIndex() {
 
 
     useEffect(() => {
-        console.log(JSON.stringify(filterBy));
-        console.log(JSON.stringify(sortBy));
         loadMails()
         setSearchParams({ ...filterBy, ...sortBy })
     }, [filterBy, sortBy])
@@ -94,7 +92,7 @@ export function MailIndex() {
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
                     <div className="mail-filter-mail-sort">
-                    <MailFilter />
+                    <MailFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
                     <MailSort sortBy={selectedSort} onSetSort={onSetSort}/>
                     </div>
                     <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />

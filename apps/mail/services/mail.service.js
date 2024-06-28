@@ -19,11 +19,26 @@ export const mailService = {
 
 
 function query(searchParams = {}) {
-    
+
     return storageService.query(MAIL_KEY)
         .then(mails => {
 
             const { filterBy, sortBy } = searchParams
+
+            const { searchType, txt } = filterBy
+
+            switch (searchType) {
+                case 'txt':
+                    if (txt) {
+                        const regex = new RegExp(txt, 'i')
+                        mails = mails.filter(mail =>
+                            regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
+                        )
+                    }
+                    break
+            }
+
+
 
             if (!filterBy.folder) filterBy.folder = 'inbox'
             switch (filterBy.folder) {
@@ -42,11 +57,12 @@ function query(searchParams = {}) {
             }
 
 
+
             if (!sortBy.sortType) {
                 sortBy.sortType = 'date'
                 sortBy.sortDir = 1
             }
-            
+
             const { sortType, sortDir } = sortBy
 
             switch (sortType) {
@@ -66,7 +82,7 @@ function query(searchParams = {}) {
 
 function get(mailId) {
     return storageService.get(MAIL_KEY, mailId)
-        .then(mail => _setNextPrevMailId(mail))
+    // .then(mail => _setNextPrevMailId(mail))
 }
 
 function remove(mailId) {
@@ -100,10 +116,11 @@ function getNewMail(
 function getFilterFromSearchParams(searchParams) {
 
     const folder = searchParams.get('folder') || ''
+    const txt = searchParams.get('txt') || ''
 
     return {
         folder,
-
+        txt
     }
 }
 
