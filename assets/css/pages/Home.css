@@ -1,1 +1,28 @@
- /* home */
+.home-container{
+    
+    height: calc(100vh - 65px);
+    text-align: center;
+
+}
+
+.home-header{
+    font-family: roboto-regular;
+    font-size: 32px;
+    padding-top: 40px;
+
+}
+
+.home-text{
+    padding-top: 20px;
+    font-size: 24px;
+    
+
+}
+.home-img-container{
+    width: 100%;
+    margin: 40px auto;
+}
+.iphone-demo{
+    width: 10%;
+}
+

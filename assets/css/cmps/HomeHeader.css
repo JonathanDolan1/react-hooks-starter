@@ -1,0 +1,132 @@
+.home-header-container {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    top: 0;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline-start: 18px;
+
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    background-color: white;
+}
+
+
+.home-header-logo-cotainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-header-logo-cotainer i{
+    color: rgb(66, 133, 244);
+    font-size: 30px;
+    
+}
+
+.home-header-logo {
+    display: block;
+    font-family: roboto-regular;
+    font-size: 25px;
+    color: rgb(95, 99, 104);
+}
+
+.home-header-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    gap: 25px;
+    padding-inline: 25px;
+    font-size: 20px;
+    color: grey;
+}
+
+.home-header-icons>* {
+    cursor: pointer;
+}
+
+.homes-header-user-icon-s {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 35px;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+
+    font-family: roboto-regular;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(251, 188, 4);
+}
+
+.homes-header-user-icon-y {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 35px;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+
+    font-family: roboto-regular;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(66, 133, 244);
+}
+
+
+.home-header-icons .fa-bars {
+    position: relative;
+}
+
+.home-header-apps {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+
+    width: 200px;
+    height: 200px;
+
+    background-color: rgb(248, 250, 253);
+    border: 5px solid rgb(233, 238, 246);
+    border-radius: 10px;
+    box-shadow: 1px 3px 5px 0px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    place-items: center;
+
+    font-size: 30px;
+}
+
+
+.home-header-apps .home-app{
+color: rgb(1, 88, 204);
+}
+
+.home-header-apps .mail-app {
+    color: rgb(66, 133, 244);
+}
+.home-header-apps .note-app {
+    color: rgb(251, 188, 4);
+}
+
+.home-header-apps .about-app{
+    color: rgb(255, 0, 0);
+}
+
+.home-header-apps .book-app {
+    color: rgb(35, 93, 13);
+}
+
+.home-header-apps.hidden {
+    display: none;
+}
