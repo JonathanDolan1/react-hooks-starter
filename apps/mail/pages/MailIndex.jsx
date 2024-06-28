@@ -42,7 +42,7 @@ export function MailIndex() {
     function onRemoveMail(id) {
         mailService.remove(id)
             .then(() => {
-                setMails(prevMails => prevMails.filter(mail => mail.id !== id))
+                unrenderMail(id)
                 showSuccessMsg(`Mail ${id} removed successfuly`)
             })
             .catch(err => showErrorMsg(`Error removing mail ${id}: ` + err))
@@ -55,35 +55,43 @@ export function MailIndex() {
                 mail.removedAt = mail.removedAt ? null : Date.now()
                 mailService.save(mail)
                 showSuccessMsg(`Mail ${id} ${archiveRestoreStr} successfuly`)
+                if (filterBy.folder !== 'all') unrenderMail(id)
             })
             .catch(err => showErrorMsg('Error archiving the mail: ' + err))
     }
 
-    function onMarkAsRead(id) {
-        mailService.get(id)
-            .then(mail => {
-                mail.isRead = !mail.isRead
-                mailService.save(mail)
-                    .then(mail => {
-                        if (!filterBy.isRead) setMails(prevMails =>  [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] )
-                        else loadMails()
-                    })
-            })
-            .catch(err => showErrorMsg(`Error marking the mail as un/read: ` + err))
+    function unrenderMail(id){
+        setMails(prevMails => prevMails.filter(mail => mail.id !== id))
     }
 
-    function onStarClicked(id){
+    function onMarkAsRead(id) {
+        updateMailState(id, 'isRead')
+    }
+
+    function onStarClicked(id) {
+        updateMailState(id, 'isStarred')
+    }
+
+    function updateMailState(id, val) {
         mailService.get(id)
-        .then(mail => {
-            mail.isStarred = !mail.isStarred
-            // console.log(mail.isStarred);
-            mailService.save(mail)
-                .then(mail => {
-                    if (!filterBy.isStarred) setMails(prevMails =>  [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] )
-                    else loadMails()
-                })
-        })
-        .catch(err => showErrorMsg(`Error star marking: ` + err))
+            .then(mail => {
+                mail[val] = !mail[val]
+                mailService.save(mail)
+                    .then(mail => {
+                        if (!filterBy[val]) {
+                            setMails(prevMails => {
+                                const idx = prevMails.findIndex(mail => mail.id === id)
+                                const newMails = [...prevMails]
+                                newMails.splice(idx, 1, mail)
+                                return newMails
+                            })
+                        } else loadMails()
+                    })
+            })
+            .catch(err => {
+                const errStr = val === 'isStarred' ? `Error star marking: ` : `Error marking the mail as un/read: `
+                showErrorMsg(errStr + err)
+            })
     }
 
     function onSetFilter(filterBy) {
