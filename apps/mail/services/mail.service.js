@@ -25,7 +25,9 @@ function query(searchParams = {}) {
 
             const { filterBy, sortBy } = searchParams
 
-            const { folder, txt, isRead } = { ...filterBy }
+            const { folder, txt, isRead , isStarred} = { ...filterBy }
+
+            if (isStarred) mails = mails.filter(mail => mail.isStarred === isStarred)
 
             if (txt) {
                 const regex = new RegExp(txt, 'i')
@@ -51,6 +53,7 @@ function query(searchParams = {}) {
             }
 
             if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
+
 
             if (!sortBy.sortType) {
                 sortBy.sortType = 'date'
@@ -112,11 +115,13 @@ function getFilterFromSearchParams(searchParams) {
     const folder = searchParams.get('folder') || ''
     const txt = searchParams.get('txt') || ''
     const isRead = searchParams.get('isRead') || ''
+    const isStarred = searchParams.get('isStarred') || ''
 
     return {
         folder,
         txt,
-        isRead
+        isRead,
+        isStarred
     }
 }
 

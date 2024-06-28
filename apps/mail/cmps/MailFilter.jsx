@@ -1,6 +1,6 @@
 import { utilService } from "../../../services/util.service.js"
 
-const {useState, useEffect, useRef} = React
+const { useState, useEffect, useRef } = React
 
 export function MailFilter({ filterBy, onSetFilter }) {
 
@@ -13,7 +13,8 @@ export function MailFilter({ filterBy, onSetFilter }) {
 
     function handleChange({ target }) {
         const field = target.name
-        const value = target.value
+        let value = target.value
+        if (target.type === 'checkbox') value = target.checked
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
@@ -22,20 +23,23 @@ export function MailFilter({ filterBy, onSetFilter }) {
         onSetFilter(filterByToEdit)
     }
 
-    const { txt , isRead } = filterByToEdit
+    const { txt, isRead, isStarred } = filterByToEdit
 
 
     return (
         <section className="mail-filter">
             <form onSubmit={onSubmitFilter}>
-                <input onChange={handleChange} type="text" placeholder="Search mail" value={txt} name="txt"/>
+                <input onChange={handleChange} type="text" placeholder="Search mail" value={txt} name="txt" />
             </form>
-            <lable htmlFor="is-read">Is read: </lable>
+            <span>Is read: </span>
             <select onChange={handleChange} value={isRead} name="isRead" id="is-read">
                 <option value=""></option>
                 <option value="true">Read</option>
                 <option value="false">Unread</option>
             </select>
+            <label htmlFor="is-starred">Is Starred: </label>
+            <input onChange={handleChange} type="checkbox" id="is-starred" name="isStarred" value={isStarred} />
+
         </section>
     )
 
