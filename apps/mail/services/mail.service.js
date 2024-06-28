@@ -25,23 +25,17 @@ function query(searchParams = {}) {
 
             const { filterBy, sortBy } = searchParams
 
-            const { searchType, txt } = filterBy
+            const { folder, txt, isRead } = { ...filterBy }
 
-            switch (searchType) {
-                case 'txt':
-                    if (txt) {
-                        const regex = new RegExp(txt, 'i')
-                        mails = mails.filter(mail =>
-                            regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
-                        )
-                    }
-                    break
+            if (txt) {
+                const regex = new RegExp(txt, 'i')
+                mails = mails.filter(mail =>
+                    regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
+                )
             }
 
-
-
-            if (!filterBy.folder) filterBy.folder = 'inbox'
-            switch (filterBy.folder) {
+            if (!folder) folder = 'inbox'
+            switch (folder) {
                 case 'inbox':
                     mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
                     break
@@ -56,14 +50,14 @@ function query(searchParams = {}) {
                     break
             }
 
-
+            if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
             if (!sortBy.sortType) {
                 sortBy.sortType = 'date'
                 sortBy.sortDir = 1
             }
 
-            const { sortType, sortDir } = sortBy
+            const { sortType, sortDir } = { ...sortBy }
 
             switch (sortType) {
                 case 'date':
@@ -117,10 +111,12 @@ function getFilterFromSearchParams(searchParams) {
 
     const folder = searchParams.get('folder') || ''
     const txt = searchParams.get('txt') || ''
+    const isRead = searchParams.get('isRead') || ''
 
     return {
         folder,
-        txt
+        txt,
+        isRead
     }
 }
 

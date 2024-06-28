@@ -11,7 +11,7 @@ export function MailFilter({ filterBy, onSetFilter }) {
         onSetFilterDebounce.current(filterByToEdit)
     }, [filterByToEdit])
 
-    function onSearchText({ target }) {
+    function handleChange({ target }) {
         const field = target.name
         const value = target.value
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
@@ -22,30 +22,19 @@ export function MailFilter({ filterBy, onSetFilter }) {
         onSetFilter(filterByToEdit)
     }
 
-
-    function onChangeSearchType({target}){
-        const field = target.name
-        const value = target.value
-        const resetVals = {
-            txt:'',
-            date:''
-        }
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, ...resetVals, [field]: value }))
-    }
-
-    const { searchType, txt } = filterByToEdit
+    const { txt , isRead } = filterByToEdit
 
 
     return (
         <section className="mail-filter">
             <form onSubmit={onSubmitFilter}>
-                <input onChange={onSearchText} type="text" placeholder="Search" value={txt} name="txt"/>
-                <button>Search</button>
+                <input onChange={handleChange} type="text" placeholder="Search mail" value={txt} name="txt"/>
             </form>
-            <label htmlFor="searchType">Sort by: </label>
-            <select className="search-type" onChange={onChangeSearchType} name="searchType" id="searchType" value={searchType}>
-                <option value="txt">Text</option>
-                <option value="date">Date</option>
+            <lable htmlFor="is-read">Is read: </lable>
+            <select onChange={handleChange} value={isRead} name="isRead" id="is-read">
+                <option value=""></option>
+                <option value="true">Read</option>
+                <option value="false">Unread</option>
             </select>
         </section>
     )

@@ -29,7 +29,7 @@ export function MailIndex() {
     }, [filterBy, sortBy])
 
     function loadMails() {
-        mailService.query({filterBy,sortBy})
+        mailService.query({ filterBy, sortBy })
             .then(setMails)
             .catch(err => showErrorMsg('Error fetching mails from storage: ', err))
     }
@@ -64,7 +64,10 @@ export function MailIndex() {
             .then(mail => {
                 mail.isRead = !mail.isRead
                 mailService.save(mail)
-                    .then(mail => setMails(prevMails => [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)]))
+                    .then(mail => {
+                        if (!filterBy.isRead) setMails(prevMails => { [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)] })
+                        else loadMails()
+                    })
             })
             .catch(err => showErrorMsg(`Error marking the mail as un/read: `, err))
     }
@@ -73,7 +76,7 @@ export function MailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    function onSetSort(sortBy){
+    function onSetSort(sortBy) {
         setSortBy(prevSort => ({ ...prevSort, ...sortBy }))
     }
 
@@ -81,7 +84,7 @@ export function MailIndex() {
 
     const mailDraftId = searchParams.get('mailDraftId')
     const selectedFolder = filterBy.folder
-    const selectedSort = {...sortBy}
+    const selectedSort = { ...sortBy }
 
     return (
         <section className="mail-index">
@@ -92,8 +95,8 @@ export function MailIndex() {
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
                     <div className="mail-filter-mail-sort">
-                    <MailFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
-                    <MailSort sortBy={selectedSort} onSetSort={onSetSort}/>
+                        <MailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                        <MailSort sortBy={selectedSort} onSetSort={onSetSort} />
                     </div>
                     <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />
                 </div>}
