@@ -1,0 +1,11 @@
+.mail-sort {
+    margin-inline-end: 2.4%;
+}
+
+.mail-sort .mail-sort-dir-list{
+    display: flex;
+}
+
+.mail-sort .sort-dir-input{
+    cursor: pointer;
+}

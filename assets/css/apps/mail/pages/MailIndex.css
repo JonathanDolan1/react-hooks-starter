@@ -23,3 +23,8 @@
 .mail-index .icon{
     cursor: pointer;
 }
+
+.mail-index .mail-filter-mail-sort{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,6 +1,7 @@
 import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 import { mailDemoDataService } from './mail-demo-data.service.js'
+import { showErrorMsg } from '../../../services/event-bus.service.js'
 
 const MAIL_KEY = 'mailDB'
 _createMails()
@@ -11,32 +12,53 @@ export const mailService = {
     remove,
     save,
     getNewMail,
+    getFilterFromSearchParams,
+    getSortFromSearchParams,
     // getDefaultFilter,
-    getFilterFromSearchParams
 }
 
 
-function query(filterBy = {}) {
+function query(searchParams = {}) {
+    
     return storageService.query(MAIL_KEY)
         .then(mails => {
-            if (filterBy.folder) {
-                switch (filterBy.folder) {
-                    case 'inbox':
-                        mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
-                        break
-                    case 'sent':
-                        mails = mails.filter(mail => mail.from === mailDemoDataService.getLoggedInUser().email && mail.sentAt)
-                        break
-                    case 'trash':
-                        mails = mails.filter(mail => mail.removedAt)
-                        break
-                    case 'drafts':
-                        mails = mails.filter(mail => !mail.sentAt)
-                        break
-                }
+
+            const { filterBy, sortBy } = searchParams
+
+            if (!filterBy.folder) filterBy.folder = 'inbox'
+            switch (filterBy.folder) {
+                case 'inbox':
+                    mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
+                    break
+                case 'sent':
+                    mails = mails.filter(mail => mail.from === mailDemoDataService.getLoggedInUser().email && mail.sentAt)
+                    break
+                case 'trash':
+                    mails = mails.filter(mail => mail.removedAt)
+                    break
+                case 'drafts':
+                    mails = mails.filter(mail => !mail.sentAt)
+                    break
             }
+
+
+            if (!sortBy.sortType) {
+                sortBy.sortType = 'date'
+                sortBy.sortDir = 1
+            }
+            
+            const { sortType, sortDir } = sortBy
+
+            switch (sortType) {
+                case 'date':
+                    mails = mails.toSorted((m1, m2) => (m1.sentAt - m2.sentAt) * -sortDir)
+                    break
+            }
+
+
             return mails
         })
+
 }
 
 function get(mailId) {
@@ -72,17 +94,26 @@ function getNewMail(
 //     return { txt: '', minSpeed: '' }
 // }
 
-
 function getFilterFromSearchParams(searchParams) {
-    // return Object.fromEntries(searchParams)
+
     const folder = searchParams.get('folder') || ''
-    // const minSpeed = searchParams.get('minSpeed') || ''
+
     return {
         folder,
-        // minSpeed
+
     }
 }
 
+function getSortFromSearchParams(searchParams) {
+
+    const sortType = searchParams.get('sortType') || ''
+    const sortDir = +searchParams.get('sortDir') || ''
+
+    return {
+        sortType,
+        sortDir
+    }
+}
 
 function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
@@ -92,13 +123,13 @@ function _createMails() {
     }
 }
 
-function _setNextPrevMailId(mail) {
-    return storageService.query(MAIL_KEY).then((mails) => {
-        const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-        const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
-        const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
-        mail.nextMailId = nextMail.id
-        mail.prevMailId = prevMail.id
-        return mail
-    })
-}
+// function _setNextPrevMailId(mail) {
+//     return storageService.query(MAIL_KEY).then((mails) => {
+//         const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
+//         const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+//         const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
+//         mail.nextMailId = nextMail.id
+//         mail.prevMailId = prevMail.id
+//         return mail
+//     })
+// }

@@ -5,6 +5,8 @@ const loggedinUser = {
     fullname: 'Mahatma Appsus'
 }
 
+const _demoMailsLength = 50
+
 export const mailDemoDataService = {
     createDemoMails,
     getLoggedInUser
@@ -14,7 +16,7 @@ function getLoggedInUser() {
     return loggedinUser
 }
 
-function createDemoMails(length = 20) {
+function createDemoMails(length = _demoMailsLength) {
     const mails = []
     for (var i = 0; i < length; i++) {
         let mail = {
@@ -114,7 +116,7 @@ function _getRandomFromAndTo() {
 
     const emailAddress = `${username}@${emailProvider}`
     const userEmailAddress = loggedinUser.email
-    if (utilService.getRandomIntInclusive(1, 10) > 5) {
+    if (utilService.getRandomIntInclusive(1, 10) > 3) {
         return {
             from: emailAddress,
             to: userEmailAddress

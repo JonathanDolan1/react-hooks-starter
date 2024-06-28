@@ -1,4 +1,5 @@
 import { MailFilter } from "../cmps/MailFilter.jsx"
+import { MailSort } from "../cmps/MailSort.jsx"
 import { MailFolderList } from "../cmps/MailFolderList.jsx"
 import { MailList } from "../cmps/MailList.jsx"
 import { mailService } from '../services/mail.service.js'
@@ -6,26 +7,31 @@ import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.servic
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 
+
 const { useState, useEffect } = React
 const { useParams, useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
-    
-    
+
+
     const { mailId: selectedMailId } = useParams()
-    
+
     const [searchParams, setSearchParams] = useSearchParams()
-    
+
     const [mails, setMails] = useState(null)
     const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
+    const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
+
 
     useEffect(() => {
+        console.log(JSON.stringify(filterBy));
+        console.log(JSON.stringify(sortBy));
         loadMails()
-        setSearchParams(filterBy)
-    }, [filterBy])
+        setSearchParams({ ...filterBy, ...sortBy })
+    }, [filterBy, sortBy])
 
     function loadMails() {
-        mailService.query(filterBy)
+        mailService.query({filterBy,sortBy})
             .then(setMails)
             .catch(err => showErrorMsg('Error fetching mails from storage: ', err))
     }
@@ -69,19 +75,32 @@ export function MailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
+    function onSetSort(sortBy){
+        setSortBy(prevSort => ({ ...prevSort, ...sortBy }))
+    }
+
     if (!mails) return <section className="loading">Loading...</section>
 
     const mailDraftId = searchParams.get('mailDraftId')
     const selectedFolder = filterBy.folder
+    const selectedSort = {...sortBy}
 
     return (
         <section className="mail-index">
             <div className="btn-edit-mail-mail-folder-list">
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
-                <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter}/>
+                <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter} />
             </div>
-            {!selectedMailId && <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />}
-            {selectedMailId && <MailDetails mailId={selectedMailId} />}
+            {!selectedMailId &&
+                <div className="mail-filter-mail-list-mail-sort">
+                    <div className="mail-filter-mail-sort">
+                    <MailFilter />
+                    <MailSort sortBy={selectedSort} onSetSort={onSetSort}/>
+                    </div>
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />
+                </div>}
+            {selectedMailId &&
+                <MailDetails mailId={selectedMailId} />}
             {mailDraftId && <MailEdit setMails={setMails} />}
         </section>
     )
