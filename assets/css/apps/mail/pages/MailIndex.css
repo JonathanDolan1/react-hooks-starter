@@ -11,11 +11,15 @@
     align-items: center;
     gap: 1em;
     height: 3.5rem;
-    width: 60%;
+    width: 8rem;
     font-size: 0.875rem;
     font-weight: 500;
     background-color: #c2e7fe;
     border: 0px solid rgba(0,0,0,0);
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.mail-index .icon{
     cursor: pointer;
 }

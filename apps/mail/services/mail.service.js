@@ -10,8 +10,7 @@ export const mailService = {
     get,
     remove,
     save,
-    getEmptyMail,
-    getLoggedInUser
+    getNewMail,
     // getDefaultFilter,
     // getFilterFromSearchParams
 }
@@ -49,14 +48,14 @@ function save(mail) {
     }
 }
 
-function getEmptyMail(
-    createdAt = '',
+function getNewMail(
+    createdAt = Date.now(),
     subject = '',
     body = '',
     isRead = false,
-    sentAt = '',
+    sentAt = null,
     removedAt = null,
-    from = '',
+    from = mailDemoDataService.getLoggedInUser().email,
     to = '') {
     return { createdAt, subject, body, isRead, sentAt, removedAt, from, to }
 }
@@ -86,7 +85,7 @@ function _createMails() {
 }
 
 // function _createMail(vendor, speed = 250) {
-//     const mail = getEmptyMail(vendor, speed)
+//     const mail = getNewMail(vendor, speed)
 //     mail.id = utilService.makeId()
 //     return mail
 // }

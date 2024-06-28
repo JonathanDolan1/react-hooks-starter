@@ -59,8 +59,29 @@
 
 .mail-edit .input-body{
     width:100%;
-    height: 17.5lh;
+    height: 16.5lh;
     resize:none;
     border:none;
     outline: none;
+}
+
+.mail-edit .btn-send{
+    background-color: var(--sendBtnColor);
+    color: white;
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+    border:none;
+    border-inline-end: 1px solid black;
+    padding-block: 0.8em;
+    padding-inline: 1.7em ;
+}
+
+.mail-edit .btn-schedule-send{
+    background-color: var(--sendBtnColor);
+    color: white;
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border:none;
+    padding-block: 0.8em;
+    padding-inline: 1em ;
 }
