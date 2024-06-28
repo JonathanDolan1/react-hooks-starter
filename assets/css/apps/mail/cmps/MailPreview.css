@@ -7,7 +7,8 @@
 }
 
 .mail-preview:first-child {
-    border-block-start: 0.08lh solid lightgray; ;
+    border-block-start: 0.08lh solid lightgray;
+    ;
 }
 
 .mail-preview:hover {
@@ -21,24 +22,25 @@
 }
 
 .mail-preview td {
-    padding: 1em;
+    padding: 0.5em;
+    align-items: center;
 }
 
-.mail-preview td:first-child{
+.mail-preview td:first-child {
     display: flex;
     gap: 1em;
 }
 
-.mail-preview .star-icon.starred{
+.mail-preview .star-icon.starred {
     color: var(--starredColor)
 }
 
-.mail-preview .star-icon.not-starred{
+.mail-preview .star-icon.not-starred {
     color: var(--notStarredColor)
 }
 
 .mail-preview td:first-child a,
-.mail-preview .subject-body a{
+.mail-preview .subject-body a {
     display: block;
     height: 1lh;
     overflow: hidden;
@@ -46,15 +48,15 @@
     white-space: nowrap;
 }
 
-.mail-preview .subject-body{
+.mail-preview .subject-body {
     width: 100%;
 }
 
-.mail-preview:hover .subject-body{
+.mail-preview:hover .subject-body {
     width: 82%;
 }
 
-.mail-preview:hover .icons{
+.mail-preview:hover .icons {
     width: 18%;
 }
 
@@ -79,9 +81,10 @@
 
 .mail-preview td:nth-child(2n) .icons {
     display: none;
-    gap: 2em;
+    gap: 1.5em;
     flex-shrink: 0;
     padding-inline: 1em;
+    margin-inline-end: 1em;
 }
 
 .mail-preview:hover td:nth-child(2n) .icons {
@@ -95,12 +98,23 @@
     align-items: center;
 }
 
-.mail-preview:hover td:last-child{
+.mail-preview:hover td:last-child {
     display: none;
 }
 
-.mail-preview a{
+.mail-preview a {
     display: block;
     height: 100%;
     width: 100%;
+}
+
+.mail-preview .icon {
+    border-radius: 50%;
+    transition: 400ms;
+    padding:0.5em
+}
+
+.mail-preview .icon:hover {
+    background-color: var(--iconHoverBgColor);
+    scale: 1.1;
 }
