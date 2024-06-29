@@ -1,0 +1,42 @@
+.mail-categories-list {
+    display: flex;
+    flex-direction: column;
+    height: 3.5rem;
+    width: 90%;
+    font-size: 0.875rem;
+    margin-block-start: 1rem !important;
+}
+
+.mail-categories-list label {
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+}
+
+.mail-categories-list .icon {
+    width: 15px;
+}
+
+.mail-categories-list input {
+    display: none;
+}
+
+.mail-categories-list label:hover {
+    cursor: pointer;
+}
+
+.mail-categories-list.important li.important {
+    font-weight: 700;
+}
+
+.mail-categories-list.social li.social {
+    font-weight: 700;
+}
+
+.mail-categories-list.updates li.updates {
+    font-weight: 700;
+}
+
+.mail-categories-list.promotions li.promotions {
+    font-weight: 700;
+}

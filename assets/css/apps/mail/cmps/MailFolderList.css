@@ -4,6 +4,9 @@
     height: 3.5rem;
     width: 90%;
     font-size: 0.875rem;
+    height: 100%;
+    border-block-end: 1px solid lightgray;
+    justify-content: center;
 }
 
 .mail-folder-list label {
@@ -18,10 +21,6 @@
 
 .mail-folder-list input {
     display: none;
-}
-
-.mail-folder-list.selected {
-    font-weight: bold;
 }
 
 .mail-folder-list label:hover {

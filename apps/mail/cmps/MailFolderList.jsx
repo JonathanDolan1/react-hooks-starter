@@ -36,7 +36,7 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
             </li>
             <li className="mail-folder-container spam" title="In dev">
                 <input type="radio" name="folder" id="spam" value="spam" readOnly/>
-                <label htmlFor="spam"><i className="icon fa-solid fa-exclamation-circle"></i><span>Spam</span></label>
+                <label htmlFor="spam"><i className=" icon fa-solid fa-ban"></i><span>Spam</span></label>
             </li>
         </ul>
     )

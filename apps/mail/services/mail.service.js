@@ -30,7 +30,7 @@ function query(searchParams = {}) {
 
             const { folder, txt, isRead, isStarred } = { ...filterBy }
 
-            if (isStarred.toString()==='true') mails = mails.filter(mail => mail.isStarred)
+            if (isStarred.toString() === 'true') mails = mails.filter(mail => mail.isStarred)
 
             if (txt) {
                 const regex = new RegExp(txt, 'i')
@@ -59,12 +59,12 @@ function query(searchParams = {}) {
                     mails = mails.filter(mail => !mail.sentAt)
                     break
             }
-            
+
             if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
-                if (filterBy.categories) {
-                    const categories = filterBy.categories.split('0')
-                mails = mails.filter(mail => _isMailHasSomeCategory(mail,categories))
+            if (filterBy.categories) {
+                const categories = filterBy.categories.split('0')
+                mails = mails.filter(mail => _isMailHasSomeCategory(mail, categories))
                 function _isMailHasSomeCategory(mail, categories) {
                     return categories.some(category => mail.categories.includes(category))
                 }

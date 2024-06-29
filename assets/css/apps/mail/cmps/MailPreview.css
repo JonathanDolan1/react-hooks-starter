@@ -19,6 +19,10 @@
     background-color: var(--readMailColor);
 }
 
+.mail-preview.unread{
+    background-color: #fff;
+}
+
 .mail-preview td {
     padding: 0.5em;
     align-items: center;
