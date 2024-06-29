@@ -8,9 +8,12 @@ export function Home() {
             <p className="home-text">Appsus seamlessly integrating powerful tools for managing emails and notes in one intuitive platform.</p>
 
             <div className='home-img-container-mac'>
-                <img className='mac-demo' src="/apps/note/imgs/Macbook-demo.png" alt="mac demo"></img>
+                <img className='mac-demo' src="../apps/note/imgs/Macbook-demo.png" alt="mac demo" />
                 <div className='home-img-container-phone'>
-                    <img className='iphone-demo' src="/apps/note/imgs/iphone-demo_1.png" alt="iphone demo"></img>
+                    <img className='iphone-demo' src="../apps/note/imgs/iphone-demo_1.png" alt="iphone demo" />
+                    <img src="./../apps/note/imgs/iphone-demo_1.png" alt="" />
+                    <img src="../apps/note/imgs/iphone-demo_1.png" alt="" />
+                    <img src="/apps/note/imgs/iphone-demo_1.png" alt="" />
                 </div>
             </div>
 
