@@ -66,7 +66,7 @@
 
 .mail-preview td:nth-child(2n) {
     display: flex;
-    gap: 1em;
+    gap: 0.6667%;
 }
 
 .mail-preview td:nth-child(2n) span.subject {
@@ -79,14 +79,15 @@
 
 .mail-preview td:nth-child(2n) .icons {
     display: none;
-    gap: 1.5em;
+    gap: 10%;
     flex-shrink: 0;
-    padding-inline: 1em;
-    margin-inline-end: 1em;
+    padding-inline: 0.6667%;
+    /* margin-inline-end: 0.6667%; */
 }
 
 .mail-preview:hover td:nth-child(2n) .icons {
     display: flex;
+    justify-content: space-evenly;
 }
 
 .mail-preview td:last-child {
