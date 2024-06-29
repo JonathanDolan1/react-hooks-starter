@@ -30,7 +30,7 @@ function query(searchParams = {}) {
 
             const { folder, txt, isRead, isStarred } = { ...filterBy }
 
-            if (isStarred) mails = mails.filter(mail => mail.isStarred === isStarred)
+            if (isStarred.toString()==='true') mails = mails.filter(mail => mail.isStarred)
 
             if (txt) {
                 const regex = new RegExp(txt, 'i')
