@@ -30,7 +30,7 @@ export function NoteHeader({changeFilter}) {
     return (
         <section className="note-header-container">
             <div className='note-header-logo-cotainer'>
-                <img src="./../../../assets/imgs/keep-logo.png" alt="Keep logo" />
+                <img src="assets/imgs/keep-logo.png" alt="Keep logo" />
                 <div className="note-header-logo">Keep</div>
             </div>
 
