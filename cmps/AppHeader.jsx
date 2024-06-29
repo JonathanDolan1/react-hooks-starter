@@ -36,8 +36,8 @@ export function AppHeader() {
                         <i className="fa-brands fa-google-pay"></i>
                     </div>
                 </i>
-                <div className="app-header-user-icon-s">S</div>
-                <div className="app-header-user-icon-y">Y</div>
+                {/* <div className="app-header-user-icon-s">S</div> */}
+                {/* <div className="app-header-user-icon-y">Y</div> */}
             </div>
         </section>
     )
