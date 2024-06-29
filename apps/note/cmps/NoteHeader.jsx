@@ -1,6 +1,5 @@
 const { Link } = ReactRouterDOM
 const { useState } = React
- 
 export function NoteHeader({changeFilter}) {
     const [isOpen, setIsOpen] = useState(true)
     const [inputValue, setInputValue] = useState('')
@@ -31,7 +30,7 @@ export function NoteHeader({changeFilter}) {
     return (
         <section className="note-header-container">
             <div className='note-header-logo-cotainer'>
-                <img src="/apps/note/imgs/keep-logo.png" alt="Keep logo" />
+                <img src="./../../../assets/imgs/keep-logo.png" alt="Keep logo" />
                 <div className="note-header-logo">Keep</div>
             </div>
 
