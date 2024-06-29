@@ -1,4 +1,4 @@
-const { Link } = ReactRouterDOM
+const { Link,NavLink } = ReactRouterDOM
 const { useState } = React
 
 export function AppHeader() {
@@ -21,15 +21,15 @@ export function AppHeader() {
 
             <div className="app-header-icons">
                 <i className="fa-solid fa-arrow-rotate-right"></i>
-                <Link to="/mail" ><i className="fa-regular fa-envelope"></i></Link>
+                <NavLink to="/mail" ><i className="fa-regular fa-envelope"></i></NavLink>
                 <i className="fa-solid fa-gear"></i>
                 <i className="fa-solid fa-bars" onClick={onBarsClick}>
                     <div className={navClass}>
-                        <Link to="/"><i className="fa-solid fa-house home-app"></i></Link>
-                        <Link to="/mail/list" ><i className="fa-solid fa-envelope mail-app"></i></Link>
-                        <Link to="/note" ><i className="fa-solid fa-note-sticky note-app"></i></Link>
-                        <Link to="/about"><i className="fa-solid fa-address-card about-app"></i></Link>
-                        <Link to="/about"><i className="fa-solid fa-book book-app"></i></Link>
+                        <NavLink to="/"><i className="fa-solid fa-house home-app"></i></NavLink>
+                        <NavLink to="/mail/list" ><i className="fa-solid fa-envelope mail-app"></i></NavLink>
+                        <NavLink to="/note" ><i className="fa-solid fa-note-sticky note-app"></i></NavLink>
+                        <NavLink to="/about"><i className="fa-solid fa-address-card about-app"></i></NavLink>
+                        <NavLink to="/about"><i className="fa-solid fa-book book-app"></i></NavLink>
                         <i className="fa-brands fa-google"></i>
                         <i className="fa-brands fa-google-play"></i>
                         <i className="fa-brands fa-google-wallet"></i>
