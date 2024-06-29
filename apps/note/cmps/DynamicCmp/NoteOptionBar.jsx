@@ -18,14 +18,6 @@ export function NoteOptionBar({note,indexFunc}) {
         console.log('onEdit')
     }
 
-    function onSend() {
-        //note content
-        //note title
-
-        console.log('onSend')
-        // indexFunc.onCreateDraftFromNote(note.Title,note.info)
-    }
-
     function onColorClick(color) {
         indexFunc.changeColor(note.id,color)
     }
@@ -34,8 +26,35 @@ export function NoteOptionBar({note,indexFunc}) {
         indexFunc.onPin(note.id, !isPinned)
     }
 
-    
+    function onSend() {
+        var title ='Title'
+        var content='Content'
+        switch (note.type) {
+            case 'NoteText':
+                title = 'Text from notes'
+                content = note.info.txt
+                break;
+            case 'NoteVideo':
+                title = 'Video from notes'
+                content = note.info.url
+                
+                break;
+            case 'NoteImg':
+                title = 'Image from notes'
+                content = note.info.url
+                
+                break;
+            case 'NoteTodo':
+                title = note.info.title
+                content = note.info.todos.map(todo => todo.txt)
+                break;
+           
+        }
+        
+        indexFunc.onCreateDraftFromNote(title,content)
+    }
 
+    
     const pinStyle = (isPinned)? {color:'yellow'} : {}
     const vidStyle = (type==='NoteVideo')? {backgroundColor:'#d3d3d3', opacity:0.7} :{}
     return (
