@@ -14,7 +14,7 @@ export function NoteIndex() {
 
     const navigate = useNavigate()
     const [notes, setNotes] = useState(null)
-    const [filterBy, setFilterBy] = useState('notes')
+    const [filterBy, setFilterBy] = useState({type:'',txt:''})
 
     useEffect(() => {
         noteService.query(filterBy)
@@ -98,8 +98,10 @@ export function NoteIndex() {
         return notes.findIndex(note => note.id === noteId)
     }
 
-    function changeFilter(newFilter) {
-        setFilterBy(newFilter)
+    function changeFilter(field,value) {
+        console.log('field:', field)
+        console.log('value:', value)
+        setFilterBy(prevFilter => ({ ...prevFilter, [field]: value }))
         return
     }
 
@@ -123,7 +125,7 @@ export function NoteIndex() {
     const unPinnedNotes = notes.filter(note => !note.isPinned)
     return (
         <section className="note-index">
-            <NoteHeader />
+            <NoteHeader changeFilter={changeFilter}/>
             <NoteSideBar changeFilter={changeFilter} />
             <NoteInsertBar setNotes={setNotes} />
             <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote} onCopy={onCopy} />

@@ -5,13 +5,11 @@
     column-width: 250px;
     column-gap: 20px;
     
-    
-
     list-style: none;
     padding: 0;
     margin-inline-end: 40px;
     margin-inline-start: 80px;
-    
+    margin-bottom: 40px;
 }
 
 .note-list > * {
