@@ -14,6 +14,7 @@ export const mailService = {
     getNewMail,
     getFilterFromSearchParams,
     getSortFromSearchParams,
+    getAllSearchParams,
     formatTimestamp
     // getDefaultFilter,
 }
@@ -142,6 +143,10 @@ function getSortFromSearchParams(searchParams) {
         sortType,
         sortDir
     }
+}
+
+function getAllSearchParams(searchParams){
+    return {...getFilterFromSearchParams(searchParams),...getSortFromSearchParams(searchParams)}
 }
 
 function _createMails() {

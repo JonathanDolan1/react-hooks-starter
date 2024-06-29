@@ -8,7 +8,7 @@ import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 
 const { useState, useEffect } = React
-const { useParams, useSearchParams } = ReactRouterDOM
+const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
 
@@ -19,6 +19,8 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
     const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadMails()
@@ -33,7 +35,9 @@ export function MailIndex() {
 
     function onAddMail() {
         mailService.save(mailService.getNewMail())
-            .then(mail => setSearchParams({ ...searchParams, mailDraftId: mail.id }))
+            .then(mail => {
+                setSearchParams({ ...filterBy, ...sortBy, mailDraftId: mail.id })
+        })
     }
 
     function onRemoveMail(id) {

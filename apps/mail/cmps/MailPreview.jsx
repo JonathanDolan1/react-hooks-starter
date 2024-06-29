@@ -3,7 +3,7 @@ import { mailService } from "../services/mail.service.js"
 
 const { Link } = ReactRouterDOM
 
-export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadStatus, onStarClicked }) {
+export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadStatus, onStarClicked}) {
 
     const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to, createdAt } = mail
 
@@ -19,7 +19,7 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadSta
             <td className="star-icon-address">
                 {!isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-regular fa-star`} title={starredClass}></i>}
                 {isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-solid fa-star`} title={starredClass}></i>}
-                <Link to={id}>
+                <Link to={sentAt ? id : `?mailDraftId=${id}`}>
                     {(isIn ? from : to)}
                     {isDraft && to && ', '}
                     {isDraft && <span className="span-draft">Draft</span>}
@@ -27,7 +27,7 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadSta
             </td>
             <td className="subject-body-icons">
                 <div className="subject-body">
-                    <Link to={id}>
+                <Link to={sentAt ? id : `?mailDraftId=${id}`}>
                         <span className="subject">{subject}</span>
                         <span className="body">{body}</span>
                     </Link>
