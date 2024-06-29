@@ -14,7 +14,7 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadSta
     const isIn = to === mailDemoDataService.getLoggedInUser().email ? true : false
 
     return (
-        <tr className={`mail-preview ${readClass}`} title={categories.join(', ')}>
+        <tr className={`mail-preview ${readClass}`} title={categories ? categories.join(', ') : ''}>
 
             <td className="star-icon-address">
                 {!isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-regular fa-star`} title={starredClass}></i>}

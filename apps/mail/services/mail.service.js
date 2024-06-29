@@ -170,7 +170,7 @@ function getAllSearchParams(searchParams) {
 function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
-        mails = mailDemoDataService.createDemoMails(50)
+        mails = mailDemoDataService.createDemoMails()
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }

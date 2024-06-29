@@ -16,7 +16,7 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
             </li>
             <li className="mail-folder-container starred">
                 <input onChange={onFolderClicked} type="radio" name="folder" id="starred" value="starred" readOnly/>
-                <label htmlFor="starred"><i className="icon fa-regular fa-star"></i><span>Starred</span></label>
+                <label htmlFor="starred"><i className="icon fa-solid fa-star"></i><span>Starred</span></label>
             </li>
             <li className="mail-folder-container sent">
                 <input onChange={onFolderClicked} type="radio" name="folder" id="sent" value="sent" readOnly/>

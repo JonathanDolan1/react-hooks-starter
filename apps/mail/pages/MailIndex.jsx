@@ -8,6 +8,7 @@ import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 import { MailCategoriesList } from "../cmps/MailCategoriesList.jsx"
 import { noteService } from "../../note/services/note.service.js"
+import { MailHeader } from "../cmps/MailHeader.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
@@ -122,9 +123,11 @@ export function MailIndex() {
     const selectedFolder = filterBy.folder
     const selectedSort = { ...sortBy }
     const selectedCategories = filterBy.categories ? filterBy.categories.split('0') : []
-
+    const searchTxt = {...filterBy}.txt
+    const {isRead,isStarred} = {...filterBy}
     return (
         <section className="mail-index">
+            <MailHeader txt={searchTxt} onSetFilter={onSetFilter}/>
             <div className="btn-edit-mail-mail-folder-list-mail-categories-list">
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
                 <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter} />
@@ -133,7 +136,7 @@ export function MailIndex() {
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
                     <div className="mail-filter-mail-sort">
-                        <MailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                        <MailFilter isRead={isRead} isStarred={isStarred} onSetFilter={onSetFilter} />
                         <MailSort sortBy={selectedSort} onSetSort={onSetSort} />
                     </div>
                     <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onToggleReadStatus={onToggleReadStatus} onStarClicked={onStarClicked} />

@@ -5,7 +5,7 @@ const loggedinUser = {
     fullname: 'Mahatma Appsus'
 }
 
-const _demoMailsLength = 50
+const _demoMailsLength = 100
 
 export const mailDemoDataService = {
     createDemoMails,
