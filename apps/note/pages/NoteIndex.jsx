@@ -14,7 +14,7 @@ export function NoteIndex() {
 
     const navigate = useNavigate()
     const [notes, setNotes] = useState(null)
-    const [filterBy, setFilterBy] = useState('notes')
+    const [filterBy, setFilterBy] = useState({type:'',txt:''})
 
     useEffect(() => {
         noteService.query(filterBy)
@@ -53,7 +53,7 @@ export function NoteIndex() {
                 console.log(err)
                 showErrorMsg('Cannot save new color')
             })
-        
+
 
     }
 
@@ -81,25 +81,31 @@ export function NoteIndex() {
 
     }
 
-    function onCopy(noteToCopy) {
-        noteToCopy.id=''
+    function onCopy(note) {
+        const idx = getIndex(note.id)
+        const noteToCopy = { ...note, id: '' }
         noteService.save(noteToCopy)
-        .then(copiedNote => {
-                setNotes(prevNotes => [copiedNote,...prevNotes])
+            .then(copiedNote => {
+                setNotes(prevNotes => {
+                    const newNotes = [...prevNotes]
+                    newNotes.splice(idx, 0, copiedNote)
+                    return newNotes
+                })
             })
     }
 
     function getIndex(noteId) {
-        const idx = notes.findIndex(note => note.id === noteId)
-        return idx
+        return notes.findIndex(note => note.id === noteId)
     }
 
-    function changeFilter(newFilter) {
-        setFilterBy(newFilter)
+    function changeFilter(field,value) {
+        console.log('field:', field)
+        console.log('value:', value)
+        setFilterBy(prevFilter => ({ ...prevFilter, [field]: value }))
         return
     }
 
-    // Note mail integration 
+    // NOTE TO MAIL
     function onCreateDraftFromNote(noteTitle = 'from note', noteContent = 'noteContent') {
         const mail = mailService.getNewMail()
         mail.subject = noteTitle
@@ -114,22 +120,16 @@ export function NoteIndex() {
         navigate(`/mail/list?mailDraftId=${mail.id}`)
     }
 
-    // Mail Note integration
-    
-
-    
-    
-
     if (!notes) return <div>Loading...</div>
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unPinnedNotes = notes.filter(note => !note.isPinned)
     return (
         <section className="note-index">
-            <NoteHeader />
+            <NoteHeader changeFilter={changeFilter}/>
             <NoteSideBar changeFilter={changeFilter} />
             <NoteInsertBar setNotes={setNotes} />
-            <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote} />
-            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote} />
+            <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote} onCopy={onCopy} />
+            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote} onCopy={onCopy} />
         </section>
     )
 }

@@ -9,7 +9,7 @@ export function NoteOptionBar({note,indexFunc}) {
         setIsVisible(!isVisible)
       }
     
-    function onDelete() {
+    function onDeleteClick() {
         // console.log('onDelete')
         indexFunc.onDelete(note.id)
     }
@@ -24,7 +24,7 @@ export function NoteOptionBar({note,indexFunc}) {
     }
     
    
-    function onSend() {
+    function onSendClick() {
         var title ='Title'
         var content='Content'
         switch (note.type) {
@@ -51,13 +51,12 @@ export function NoteOptionBar({note,indexFunc}) {
         indexFunc.onCreateDraftFromNote(title,content)
     }
 
-    function onCopy(){
+    function onCopyClick(){
         indexFunc.onCopy(note)
     }
 
     function onEdit() {
         console.log('onEdit')
-        indexFunc.onCreateNoteFromMail('some demo mail content')
     }
 
     const pinStyle = (isPinned)? {color:'yellow'} : {}
@@ -66,9 +65,9 @@ export function NoteOptionBar({note,indexFunc}) {
         <div className="options-bar" style={vidStyle}>
             <button style={pinStyle} onClick={onPinClick}><i className="fa-solid fa-thumbtack"></i></button>
             <button onClick={toggleVisibility}><i className="fa-solid fa-palette"></i></button>
-            <button onClick={onSend}><i className="fa-solid fa-envelope"></i></button>
-            <button onClick={onCopy}><i className="fa-solid fa-copy"></i></button>
-            <button onClick={onDelete}><i className="fa-solid fa-trash"></i></button>
+            <button onClick={onSendClick}><i className="fa-solid fa-envelope"></i></button>
+            <button onClick={onCopyClick}><i className="fa-solid fa-copy"></i></button>
+            <button onClick={onDeleteClick}><i className="fa-solid fa-trash"></i></button>
             {/* <button onClick={onEdit}><i className="fa-solid fa-pen-to-square"></i></button> */}
 
         {isVisible && (

@@ -6,26 +6,24 @@ export function NoteSideBar({changeFilter}) {
 
     function handleClick(str) {
         setActive(str)
-        changeFilter(str)
+        if(str === 'notes') changeFilter('type', '')
+        else changeFilter('type', str)
     }
 
     function getClass(type) {
         let baseClass = ''
         switch (type) {
-            case 'img':
+            case 'NoteImg':
                 baseClass = 'fa-regular fa-image'
                 break
-            case 'text':
+            case 'NoteText':
                 baseClass = 'fa-regular fa-note-sticky'
                 break
-            case 'vid':
+            case 'NoteVideo':
                 baseClass = 'fa-solid fa-film'
                 break
-            case 'todo':
+            case 'NoteTodo':
                 baseClass = 'fa-regular fa-square-check'
-                break
-            case 'trash':
-                baseClass = 'fa-regular fa-trash-can'
                 break
             case 'notes':
                 baseClass = "fa-regular fa-lightbulb"
@@ -37,11 +35,10 @@ export function NoteSideBar({changeFilter}) {
     return (
         <div className="note-sidebar">
             <i className={getClass('notes')} onClick={() => handleClick('notes')}></i>
-            <i className={getClass('img')} onClick={() => handleClick('img')}></i>
-            <i className={getClass('text')} onClick={() => handleClick('text')}></i>
-            <i className={getClass('vid')} onClick={() => handleClick('vid')}></i>
-            <i className={getClass('todo')} onClick={() => handleClick('todo')}></i>
-            <i className={getClass('trash')} onClick={() => handleClick('trash')}></i>
+            <i className={getClass('NoteImg')} onClick={() => handleClick('NoteImg')}></i>
+            <i className={getClass('NoteText')} onClick={() => handleClick('NoteText')}></i>
+            <i className={getClass('NoteVideo')} onClick={() => handleClick('NoteVideo')}></i>
+            <i className={getClass('NoteTodo')} onClick={() => handleClick('NoteTodo')}></i>
         </div>
     );
 }

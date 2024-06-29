@@ -1,28 +1,47 @@
-.home-container{
-    
-    height: calc(100vh - 65px);
+.home-container {
+    height: calc(100vh - 100px);
     text-align: center;
 
 }
 
-.home-header{
+.home-header {
     font-family: roboto-regular;
     font-size: 32px;
     padding-top: 40px;
 
 }
 
-.home-text{
+.home-text {
     padding-top: 20px;
     font-size: 24px;
-    
-
 }
-.home-img-container{
+
+.home-img-container-mac {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 10%;
+    /* background-color: grey; */
+    aspect-ratio: 16/9;
+    width: 60%;
+    max-width: 900px;
+    margin-block: 20px 0px;
+    margin-inline: auto;
+}
+
+.home-img-container-phone {
+    position: absolute;
+    top:0%;
+    right: -15%;
+    aspect-ratio: 1/2;
+    width: 20%;
+    margin-inline: auto;
+}
+
+.iphone-demo {
     width: 100%;
-    margin: 40px auto;
-}
-.iphone-demo{
-    width: 10%;
 }
 
+.mac-demo {
+    height: 100%;
+}

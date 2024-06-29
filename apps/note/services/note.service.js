@@ -5,7 +5,7 @@ import { storageService } from "../../../services/async-storage.service.js"
 //noteDB
 
 const NOTE_KEY = 'noteDB'
-// _createNotes()
+_createNotes()
 
 //service functions
 export const noteService = {
@@ -20,15 +20,19 @@ export const noteService = {
 
 window.ns = noteService
 
-function query(filterBy = 'notes') {
+function query(filterBy = {}) {
     return storageService.query(NOTE_KEY)
         .then(notes => {
-            if (filterBy === 'notes') return notes
-            else if (filterBy === 'img') return notes.filter(note => note.type === 'NoteImg')
-            else if (filterBy === 'text') return notes.filter(note => note.type === 'NoteText')
-            else if (filterBy === 'vid') return notes.filter(note => note.type === 'NoteVideo')
-            else if (filterBy === 'todo') return notes.filter(note => note.type === 'NoteTodo')
-            else return notes
+            if (filterBy.type) {
+                console.log(filterBy.type)
+                notes = notes.filter(note => note.type === filterBy.type)
+            }
+            if (filterBy.txt) {
+                const regExp = new RegExp(filterBy.txt, 'i')
+                notes = notes.filter(notes => regExp.test(notes.type))
+            }
+
+            return notes
         })
 }
 
@@ -96,7 +100,7 @@ function createUserNote(type = 'NoteText', userInput) {
     }
 
     const now = new Date()
-    const date = {date:now.toISOString().split('T')[0], time: now.toISOString().split('T')[1].replace(/\.\d{3}Z$/, '')}
+    const date = { date: now.toISOString().split('T')[0], time: now.toISOString().split('T')[1].replace(/\.\d{3}Z$/, '') }
 
     const note = {
         id: '',

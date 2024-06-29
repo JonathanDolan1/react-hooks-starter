@@ -1,19 +1,36 @@
-const { Link, useNavigate} = ReactRouterDOM
+const { Link } = ReactRouterDOM
 const { useState } = React
-
-export function NoteHeader() {
+export function NoteHeader({changeFilter}) {
     const [isOpen, setIsOpen] = useState(true)
-    const navigate = useNavigate()
+    const [inputValue, setInputValue] = useState('')
     
     function onBarsClick() {
         setIsOpen(prevIsOpen => !prevIsOpen)
+    }
+
+    function onInputChange(ev) {//update inputValue on input change (2 way data binding)
+        setInputValue(ev.target.value)
+    }
+
+    function handleKeyPress(ev) {//handle submit on Enter press
+        if(ev.key==='Enter') {
+            submitInput()
+        }
+    }
+
+    function submitInput() {
+        //send filter
+        changeFilter('txt',inputValue)
+        //reset input
+        setInputValue('')
+          
     }
 
     const navClass = isOpen ? 'note-header-apps hidden' : 'note-header-apps'
     return (
         <section className="note-header-container">
             <div className='note-header-logo-cotainer'>
-                <img src="/apps/note/imgs/keep-logo.png" alt="Keep logo" />
+                <img src="./../../../assets/imgs/keep-logo.png" alt="Keep logo" />
                 <div className="note-header-logo">Keep</div>
             </div>
 
@@ -22,6 +39,9 @@ export function NoteHeader() {
                     type="text"
                     placeholder='Search'
                     id='note-header-search'
+                    value={inputValue}
+                    onChange = {onInputChange}
+                    onKeyPress={handleKeyPress}
                 />
                 <i className="fa-solid fa-arrow-rotate-right"></i>
                 <Link to="/mail" ><i className="fa-regular fa-envelope"></i></Link>
