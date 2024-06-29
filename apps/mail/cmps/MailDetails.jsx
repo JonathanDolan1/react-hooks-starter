@@ -9,7 +9,13 @@ export function MailDetails({ mailId }) {
 
     useEffect(() => {
         mailService.get(mailId)
-            .then(setMail)
+            .then((mail)=>{
+                if (!mail.isRead){
+                    mail.isRead = true
+                    mailService.save(mail)
+                }
+                setMail(mail)
+            })
             .catch(err => showErrorMsg('error fetching the mail:' + err))
     }, [])
 
