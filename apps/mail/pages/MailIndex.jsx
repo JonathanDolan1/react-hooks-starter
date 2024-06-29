@@ -9,7 +9,7 @@ import { MailEdit } from "../cmps/MailEdit.jsx"
 import { MailCategoriesList } from "../cmps/MailCategoriesList.jsx"
 
 const { useState, useEffect } = React
-const { useParams, useSearchParams } = ReactRouterDOM
+const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
 
@@ -22,7 +22,10 @@ export function MailIndex() {
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
     const [mailDraftIdObj, setMailDraftIdObj] = useState(mailService.getMailDraftIdObjFromSearchParams(searchParams))
 
+    // const navigate = useNavigate()
+
     useEffect(() => {
+        console.log(mailDraftIdObj);
         loadMails()
         setSearchParams({ ...filterBy, ...sortBy, ...mailDraftIdObj })
     }, [filterBy, sortBy, mailDraftIdObj])
@@ -36,7 +39,7 @@ export function MailIndex() {
     function onAddMail() {
         mailService.save(mailService.getNewMail())
             .then(mail => {
-                setMailDraftIdObj({ mailDraft: mail.id })
+                // setMailDraftIdObj(()=>({ mailDraft: mail.id }))
                 setSearchParams({ ...filterBy, ...sortBy, mailDraftId: mail.id })
             })
     }
@@ -107,7 +110,7 @@ export function MailIndex() {
     if (!mails) return <section className="loading">Loading...</section>
 
     const mailDraftId = mailService.getMailDraftIdObjFromSearchParams(searchParams).mailDraftId
-    
+    console.log(mailDraftId + 'sent to MailEdit');
     const selectedFolder = filterBy.folder
     const selectedSort = { ...sortBy }
 
@@ -128,7 +131,7 @@ export function MailIndex() {
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}
-            {mailDraftId && <MailEdit setMails={setMails} setMailDraftIdObj={setMailDraftIdObj}/>}
+            {mailDraftId && <MailEdit loadMails={loadMails} setMailDraftIdObj={setMailDraftIdObj} mailId={mailDraftId}/>}
         </section>
     )
 }

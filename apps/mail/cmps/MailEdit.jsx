@@ -4,25 +4,26 @@ import { mailService } from "../services/mail.service.js"
 const { useSearchParams } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function MailEdit({ setMails }) {
+export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
 
     const [mailDraft, setMailDraft] = useState(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
-        mailService.get(searchParams.get('mailDraftId'))
+        mailService.get(mailId)
             .then(setMailDraft)
             .catch(err => showErrorMsg('Error fetching mail draft: ' + err))
     }
-        , [])
+        , [mailId])
 
     useEffect(() => {
         if (mailDraft) {
             saveMailDraft(mailDraft)
             if (mailDraft.sentAt) {
                 showSuccessMsg('Mail sent successfuly')
-                setMails(prevMails => [mailDraft, ...prevMails.filter(mail=>mail.id!==mailDraft.id)])
+                // loadMails()
+                // setMails(prevMails => [mailDraft, ...prevMails.filter(mail => mail.id !== mailDraft.id)])
                 onCloseEdit()
             }
         }
@@ -35,6 +36,8 @@ export function MailEdit({ setMails }) {
 
     function onCloseEdit() {
         setSearchParams({ ...mailService.getAllSearchParams(searchParams), mailDraftId: '' })
+        setMailDraftIdObj({ mailDraftId: '' })
+        loadMails()
     }
 
     function handleChange({ target }) {
@@ -53,42 +56,46 @@ export function MailEdit({ setMails }) {
         setMailDraft(prevMailDraft => ({ ...prevMailDraft, sentAt: Date.now() }))
     }
 
-    if (!mailDraft) return <section className="loading">Loading...</section>
+    // if (!mailDraft) return <section className="loading">Loading...</section>
 
     return (
         <section className="mail-edit">
-            <div className="title-icons">
-                <span className="title">New Message</span>
-                <span className="icons">
-                    <i className="icon fa-solid fa-up-right-and-down-left-from-center"></i>
-                    <i className="icon fa-solid fa-window-minimize"></i>
-                    <i className="icon fa-solid fa-xmark" onClick={onCloseEdit}></i>
-                </span>
-            </div>
+            {!mailDraft && <section className="loading">Loading...</section>}
+            {mailDraft &&
+                <React.Fragment>
+                    <div className="title-icons">
+                        <span className="title">New Message</span>
+                        <span className="icons">
+                            <i className="icon fa-solid fa-up-right-and-down-left-from-center"></i>
+                            <i className="icon fa-solid fa-window-minimize"></i>
+                            <i className="icon fa-solid fa-xmark" onClick={onCloseEdit}></i>
+                        </span>
+                    </div>
 
-            <form className="mail-edit-form" onSubmit={onSendMail}>
-                <div className="input-container from-container">
-                    <label htmlFor="from">From</label>
-                    <input onChange={handleChange} type="email" value={mailDraft.from} id="from" name="from" disabled></input>
-                </div>
-                <div className="input-container to-container">
-                    <label htmlFor="to">To</label>
-                    <input onChange={handleChange} type="email" id="to" value={mailDraft.to} name="to"></input>
-                </div>
-                <div className="input-container subject-container">
-                    <input onChange={handleChange} type="text" placeholder="Subject" value={mailDraft.subject} name="subject"></input>
-                </div>
-                <div className="input-container body-container">
+                    <form className="mail-edit-form" onSubmit={onSendMail}>
+                        <div className="input-container from-container">
+                            <label htmlFor="from">From</label>
+                            <input onChange={handleChange} type="email" value={mailDraft.from} id="from" name="from" disabled></input>
+                        </div>
+                        <div className="input-container to-container">
+                            <label htmlFor="to">To</label>
+                            <input onChange={handleChange} type="email" id="to" value={mailDraft.to} name="to"></input>
+                        </div>
+                        <div className="input-container subject-container">
+                            <input onChange={handleChange} type="text" placeholder="Subject" value={mailDraft.subject} name="subject"></input>
+                        </div>
+                        <div className="input-container body-container">
 
-                    <textarea onChange={handleChange} className="input-body" value={mailDraft.body} name="body"></textarea>
+                            <textarea onChange={handleChange} className="input-body" value={mailDraft.body} name="body"></textarea>
 
-                </div>
-                <div>
-                    <button className="btn-send">Send</button>
-                    <button className="btn-schedule-send"><i className="icon fa-solid fa-caret-down"></i></button>
-                </div>
-            </form>
-
+                        </div>
+                        <div>
+                            <button className="btn-send">Send</button>
+                            <button className="btn-schedule-send"><i className="icon fa-solid fa-caret-down"></i></button>
+                        </div>
+                    </form>
+                </React.Fragment>
+            }
         </section>
     )
 
