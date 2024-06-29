@@ -29,7 +29,6 @@
 
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
-@import './cmps/HomeHeader.css';
 
 /* Note Cmps */
 @import './apps/note/cmps/NoteImg.css';
