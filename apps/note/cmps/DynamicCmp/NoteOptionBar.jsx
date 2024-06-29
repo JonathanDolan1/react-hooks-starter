@@ -14,18 +14,16 @@ export function NoteOptionBar({note,indexFunc}) {
         indexFunc.onDelete(note.id)
     }
 
-    function onEdit() {
-        console.log('onEdit')
-    }
-
+    
     function onColorClick(color) {
         indexFunc.changeColor(note.id,color)
     }
-
+    
     function onPinClick() {
         indexFunc.onPin(note.id, !isPinned)
     }
-
+    
+   
     function onSend() {
         var title ='Title'
         var content='Content'
@@ -48,13 +46,20 @@ export function NoteOptionBar({note,indexFunc}) {
                 title = note.info.title
                 content = note.info.todos.map(todo => todo.txt)
                 break;
-           
         }
         
         indexFunc.onCreateDraftFromNote(title,content)
     }
 
-    
+    function onCopy(){
+        indexFunc.onCopy(note)
+    }
+
+    function onEdit() {
+        console.log('onEdit')
+        indexFunc.onCreateNoteFromMail('some demo mail content')
+    }
+
     const pinStyle = (isPinned)? {color:'yellow'} : {}
     const vidStyle = (type==='NoteVideo')? {backgroundColor:'#d3d3d3', opacity:0.7} :{}
     return (
@@ -62,8 +67,9 @@ export function NoteOptionBar({note,indexFunc}) {
             <button style={pinStyle} onClick={onPinClick}><i className="fa-solid fa-thumbtack"></i></button>
             <button onClick={toggleVisibility}><i className="fa-solid fa-palette"></i></button>
             <button onClick={onSend}><i className="fa-solid fa-envelope"></i></button>
-            <button onClick={onEdit}><i className="fa-solid fa-pen-to-square"></i></button>
+            <button onClick={onCopy}><i className="fa-solid fa-copy"></i></button>
             <button onClick={onDelete}><i className="fa-solid fa-trash"></i></button>
+            {/* <button onClick={onEdit}><i className="fa-solid fa-pen-to-square"></i></button> */}
 
         {isVisible && (
             <div className="color-palette" >

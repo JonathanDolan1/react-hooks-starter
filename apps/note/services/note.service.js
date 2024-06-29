@@ -5,7 +5,7 @@ import { storageService } from "../../../services/async-storage.service.js"
 //noteDB
 
 const NOTE_KEY = 'noteDB'
-_createNotes()
+// _createNotes()
 
 
 //service functions

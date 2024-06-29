@@ -81,6 +81,7 @@ export function NoteInsertBar({setNotes}) {
                 value={inputValue}
                 onChange = {onInputChange}
                 onKeyPress={handleKeyPress}
+                id='note-input-field'
                 
                 />
                 <div className='note-input-icons'>
