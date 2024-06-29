@@ -21,6 +21,7 @@ export function NoteHeader() {
                 <input className="note-header-search"
                     type="text"
                     placeholder='Search'
+                    id='note-header-search'
                 />
                 <i className="fa-solid fa-arrow-rotate-right"></i>
                 <Link to="/mail" ><i className="fa-regular fa-envelope"></i></Link>
