@@ -1,0 +1,14 @@
+.app-header {
+  background-color: var(--clr1);
+  color: var(--clr1bg-light);
+  padding-block: .75em;
+
+}
+
+.app-header .app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 50px;
+  padding-inline-end: 50px;
+}

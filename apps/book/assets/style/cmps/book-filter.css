@@ -1,0 +1,72 @@
+.book-filter {
+    background-color: var(--clr2bg);
+    display: flex;
+    flex-direction: column;
+    place-items: left;
+    /* place-content: center; */
+    margin-block-end: 15px;
+}
+
+.book-filter h2 {
+    margin-inline-start: 18px;
+    font-size: 26px;
+}
+
+.book-filter form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.book-filter form div {
+    display: flex;
+    gap: 15px;
+    margin-inline-start: 20px;
+    font-size: 20px;
+}
+
+.book-filter form div:first-child {
+    gap: 18px;
+}
+
+.book-filter form button {
+    width: 100px;
+    margin-inline-start: 20px;
+    border: 1px solid black;
+}
+
+
+
+
+
+<section className="book-filter"><h2>Filter Our Books</h2><form onSubmit= {
+    onSubmitFilter
+}
+
+><label htmlFor="title">Title: </label><input type="text"
+
+value= {
+    title
+}
+
+onChange= {
+    handleChange
+}
+
+name="title"
+placeholder="Filter by title"
+id="title"
+
+/><label htmlFor="price">Price: </label><input type="number"
+value= {
+    price || ''
+}
+
+onChange= {
+    handleChange
+}
+
+name="price"
+id="price"
+placeholder="Filter by price"
+/><button>Submit</button></form></section>

@@ -29,7 +29,7 @@ export function AppHeader() {
                         <NavLink to="/mail/list" ><i className="fa-solid fa-envelope mail-app"></i></NavLink>
                         <NavLink to="/note" ><i className="fa-solid fa-note-sticky note-app"></i></NavLink>
                         <NavLink to="/about"><i className="fa-solid fa-address-card about-app"></i></NavLink>
-                        <NavLink to="/about"><i className="fa-solid fa-book book-app"></i></NavLink>
+                        <NavLink to="/book"><i className="fa-solid fa-book book-app"></i></NavLink>
                         <i className="fa-brands fa-google"></i>
                         <i className="fa-brands fa-google-play"></i>
                         <i className="fa-brands fa-google-wallet"></i>

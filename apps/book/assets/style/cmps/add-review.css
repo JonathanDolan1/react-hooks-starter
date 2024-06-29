@@ -1,0 +1,24 @@
+.reviews-section {
+    width: 230px;
+    /* background-color: grey; */
+}
+.reviews-section h1 {
+    text-align: left;
+}
+.reviews-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fullname,.rating,.date {
+    font-weight: 600;
+}
+
+.reviews-section form input {
+    width: 150px;
+}
+
+.reviews-section form select {
+    width: 150px;
+}
