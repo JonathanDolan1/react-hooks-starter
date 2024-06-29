@@ -1,4 +1,4 @@
-// const { useSearchParams } = ReactRouterDOM
+
 
 export function MailFolderList({ selectedFolder, onSetFilter }) {
 

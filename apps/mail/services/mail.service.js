@@ -14,6 +14,7 @@ export const mailService = {
     getNewMail,
     getFilterFromSearchParams,
     getSortFromSearchParams,
+    getMailDraftIdObjFromSearchParams,
     getAllSearchParams,
     formatTimestamp
     // getDefaultFilter,
@@ -28,7 +29,7 @@ function query(searchParams = {}) {
             const { filterBy, sortBy } = searchParams
 
             const { folder, txt, isRead, isStarred } = { ...filterBy }
-            
+
             if (isStarred) mails = mails.filter(mail => mail.isStarred === isStarred)
 
             if (txt) {
@@ -58,7 +59,7 @@ function query(searchParams = {}) {
                     mails = mails.filter(mail => !mail.sentAt)
                     break
             }
-            
+
 
             if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
@@ -82,7 +83,7 @@ function query(searchParams = {}) {
 
             return mails
         })
-        .catch(err=>showErrorMsg('Error fetching mails: ' + err))
+        .catch(err => showErrorMsg('Error fetching mails: ' + err))
 
 }
 
@@ -108,11 +109,12 @@ function getNewMail(
     subject = '',
     body = '',
     isRead = false,
+    isStarred = false,
     sentAt = null,
     removedAt = null,
     from = mailDemoDataService.getLoggedInUser().email,
     to = '') {
-    return { createdAt, subject, body, isRead, sentAt, removedAt, from, to }
+    return { createdAt, subject, body, isRead, isStarred, sentAt, removedAt, from, to }
 }
 
 // function getDefaultFilter() {
@@ -145,8 +147,13 @@ function getSortFromSearchParams(searchParams) {
     }
 }
 
-function getAllSearchParams(searchParams){
-    return {...getFilterFromSearchParams(searchParams),...getSortFromSearchParams(searchParams)}
+function getMailDraftIdObjFromSearchParams(searchParams) {
+    const mailDraftId = searchParams.get('mailDraftId') || ''
+    return {mailDraftId}
+}
+
+function getAllSearchParams(searchParams) {
+    return { ...getFilterFromSearchParams(searchParams), ...getSortFromSearchParams(searchParams), ...getMailDraftIdObjFromSearchParams(searchParams) }
 }
 
 function _createMails() {

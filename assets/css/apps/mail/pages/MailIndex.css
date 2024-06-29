@@ -1,11 +1,11 @@
-.mail-index{
+.mail-index {
     position: relative;
     display: grid;
     grid-template-columns: 15% 85%;
     font-family: sans-serif;
 }
 
-.mail-index .btn-edit-mail{
+.mail-index .btn-edit-mail {
     display: flex;
     align-items: center;
     gap: 1em;
@@ -20,11 +20,16 @@
     padding-inline: 1em;
 }
 
-.mail-index .icon{
+.mail-index .icon {
     cursor: pointer;
 }
 
-.mail-index .mail-filter-mail-sort{
+.mail-index .mail-filter-mail-sort {
     display: flex;
     justify-content: space-between;
+}
+
+.mail-index .btn-edit-mail-mail-folder-list-mail-categories-list {
+    display: grid;
+    grid-template-rows: 3.5rem 20rem auto;
 }

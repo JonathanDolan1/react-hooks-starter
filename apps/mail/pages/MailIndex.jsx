@@ -6,9 +6,10 @@ import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
+import { MailCategoriesList } from "../cmps/MailCategoriesList.jsx"
 
 const { useState, useEffect } = React
-const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
+const { useParams, useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
 
@@ -19,13 +20,12 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
     const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
-
-    const navigate = useNavigate()
+    const [mailDraftIdObj, setMailDraftIdObj] = useState(mailService.getMailDraftIdObjFromSearchParams(searchParams))
 
     useEffect(() => {
         loadMails()
-        setSearchParams({ ...filterBy, ...sortBy })
-    }, [filterBy, sortBy])
+        setSearchParams({ ...filterBy, ...sortBy, ...mailDraftIdObj })
+    }, [filterBy, sortBy, mailDraftIdObj])
 
     function loadMails() {
         mailService.query({ filterBy, sortBy })
@@ -36,8 +36,9 @@ export function MailIndex() {
     function onAddMail() {
         mailService.save(mailService.getNewMail())
             .then(mail => {
+                setMailDraftIdObj({ mailDraft: mail.id })
                 setSearchParams({ ...filterBy, ...sortBy, mailDraftId: mail.id })
-        })
+            })
     }
 
     function onRemoveMail(id) {
@@ -105,15 +106,17 @@ export function MailIndex() {
 
     if (!mails) return <section className="loading">Loading...</section>
 
-    const mailDraftId = searchParams.get('mailDraftId')
+    const mailDraftId = mailService.getMailDraftIdObjFromSearchParams(searchParams).mailDraftId
+    
     const selectedFolder = filterBy.folder
     const selectedSort = { ...sortBy }
 
     return (
         <section className="mail-index">
-            <div className="btn-edit-mail-mail-folder-list">
+            <div className="btn-edit-mail-mail-folder-list-mail-categories-list">
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
                 <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter} />
+                <MailCategoriesList />
             </div>
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
@@ -125,7 +128,7 @@ export function MailIndex() {
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}
-            {mailDraftId && <MailEdit setMails={setMails} />}
+            {mailDraftId && <MailEdit setMails={setMails} setMailDraftIdObj={setMailDraftIdObj}/>}
         </section>
     )
 }
