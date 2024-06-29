@@ -118,18 +118,7 @@ export function NoteIndex() {
     
 
     
-    function onCreateNoteFromMail(mailContent) {
-        const type = 'NoteText'
-        const content = mailContent
-        const newNote = noteService.createUserNote(type, content)
-
-        //saving to DB and updating dom
-        noteService.save(newNote)
-            .then(savedNote => {
-                setNotes(prevNotes => [...prevNotes, savedNote])
-            })
-            .catch(err => console.log(err))
-    }
+    
 
     if (!notes) return <div>Loading...</div>
     const pinnedNotes = notes.filter(note => note.isPinned)

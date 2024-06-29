@@ -7,7 +7,6 @@ import { storageService } from "../../../services/async-storage.service.js"
 const NOTE_KEY = 'noteDB'
 // _createNotes()
 
-
 //service functions
 export const noteService = {
     query,
@@ -55,7 +54,6 @@ function save(note) {
 function UpdateLocalStorage(notes) {
     utilService.saveToStorage(NOTE_KEY, notes)
 }
-
 
 function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
