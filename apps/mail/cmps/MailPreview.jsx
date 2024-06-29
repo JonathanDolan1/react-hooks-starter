@@ -5,7 +5,7 @@ const { Link } = ReactRouterDOM
 
 export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadStatus, onStarClicked}) {
 
-    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to, createdAt } = mail
+    const { isStarred, isRead, removedAt, id, subject, sentAt, body, from, to, createdAt ,categories} = mail
 
     const starredClass = isStarred ? 'starred' : 'not-starred'
     const readClass = isRead ? 'read' : 'unread'
@@ -14,7 +14,7 @@ export function MailPreview({ mail, onRemoveMail, onArchiveMail, onToggleReadSta
     const isIn = to === mailDemoDataService.getLoggedInUser().email ? true : false
 
     return (
-        <tr className={`mail-preview ${readClass}`}>
+        <tr className={`mail-preview ${readClass}`} title={categories.join(', ')}>
 
             <td className="star-icon-address">
                 {!isStarred && <i onClick={() => onStarClicked(id)} className={`icon star-icon ${starredClass} fa-regular fa-star`} title={starredClass}></i>}

@@ -59,10 +59,16 @@ function query(searchParams = {}) {
                     mails = mails.filter(mail => !mail.sentAt)
                     break
             }
-
-
+            
             if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
+                if (filterBy.categories) {
+                    const categories = filterBy.categories.split('0')
+                mails = mails.filter(mail => _isMailHasSomeCategory(mail,categories))
+                function _isMailHasSomeCategory(mail, categories) {
+                    return categories.some(category => mail.categories.includes(category))
+                }
+            }
 
             if (!sortBy.sortType) {
                 sortBy.sortType = 'date'
@@ -77,13 +83,12 @@ function query(searchParams = {}) {
                         const m1Date = m1.sentAt || m1.createdAt
                         const m2Date = m2.sentAt || m2.createdAt
                         return ((m1Date - m2Date) * -sortDir)
-            })
+                    })
                     break
                 case 'subject':
                     mails = mails.toSorted((m1, m2) => m1.subject.localeCompare(m2.subject) * sortDir)
                     break
             }
-
 
             return mails
         })
@@ -131,12 +136,14 @@ function getFilterFromSearchParams(searchParams) {
     const txt = searchParams.get('txt') || ''
     const isRead = searchParams.get('isRead') || ''
     const isStarred = searchParams.get('isStarred') || ''
+    const categories = searchParams.get('categories') || ''
 
     return {
         folder,
         txt,
         isRead,
-        isStarred
+        isStarred,
+        categories
     }
 }
 
@@ -153,7 +160,7 @@ function getSortFromSearchParams(searchParams) {
 
 function getMailDraftIdObjFromSearchParams(searchParams) {
     const mailDraftId = searchParams.get('mailDraftId') || ''
-    return {mailDraftId}
+    return { mailDraftId }
 }
 
 function getAllSearchParams(searchParams) {

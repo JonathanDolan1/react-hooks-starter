@@ -13,7 +13,7 @@ const { useState, useEffect } = React
 const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
-
+    
     const { mailId: selectedMailId } = useParams()
 
     const [searchParams, setSearchParams] = useSearchParams()
@@ -26,7 +26,6 @@ export function MailIndex() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(mailDraftIdObj);
         loadMails()
         setSearchParams({ ...filterBy, ...sortBy, ...mailDraftIdObj })
     }, [filterBy, sortBy, mailDraftIdObj])
@@ -120,16 +119,16 @@ export function MailIndex() {
     if (!mails) return <section className="loading">Loading...</section>
 
     const mailDraftId = mailService.getMailDraftIdObjFromSearchParams(searchParams).mailDraftId
-    console.log(mailDraftId + 'sent to MailEdit');
     const selectedFolder = filterBy.folder
     const selectedSort = { ...sortBy }
+    const selectedCategories = filterBy.categories ? filterBy.categories.split('0') : []
 
     return (
         <section className="mail-index">
             <div className="btn-edit-mail-mail-folder-list-mail-categories-list">
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
                 <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter} />
-                <MailCategoriesList />
+                <MailCategoriesList selectedCategories={new Set([...selectedCategories])} onSetFilter={onSetFilter}/>
             </div>
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">

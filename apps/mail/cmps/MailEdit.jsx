@@ -22,8 +22,6 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId, onCreateNoteFro
             saveMailDraft(mailDraft)
             if (mailDraft.sentAt) {
                 showSuccessMsg('Mail sent successfuly')
-                // loadMails()
-                // setMails(prevMails => [mailDraft, ...prevMails.filter(mail => mail.id !== mailDraft.id)])
                 onCloseEdit()
             }
         }
@@ -55,8 +53,6 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId, onCreateNoteFro
         }
         setMailDraft(prevMailDraft => ({ ...prevMailDraft, sentAt: Date.now() }))
     }
-
- 
 
     return (
         <section className="mail-edit">

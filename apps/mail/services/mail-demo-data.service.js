@@ -25,13 +25,30 @@ function createDemoMails(length = _demoMailsLength) {
             body: _generateRandomBody(),
             isRead: _getRandomTrueFalse(),
             isStarred: _getRandomTrueFalse(),
-            ..._getRandomFromAndTo(),
+            categories: _generateRandomCategories(),
+            ..._getRandomFromAndTo()
         }
         const timestamps = _generateTimestamps(mail.to)
-        mail = {...mail,...timestamps}
+        mail = { ...mail, ...timestamps }
         mails.push(mail)
     }
     return mails
+}
+
+function _generateRandomCategories() {
+    const options = ['important','social', 'updates', 'promotions']
+    const length = utilService.getRandomIntInclusive(0, 2)
+    const categories = []
+    for (var i = 0; i < length; i++) {
+        while (true) {
+            const category = options[utilService.getRandomIntInclusive(0, options.length - 1)]
+            if (!categories.includes(category)){
+                categories.push(category)
+                break
+            }
+        }
+    }
+    return categories
 }
 
 function _generateRandomSubject() {
