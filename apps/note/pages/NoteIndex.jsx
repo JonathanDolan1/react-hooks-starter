@@ -5,16 +5,14 @@ import { NoteSideBar } from "../cmps/NoteSideBar.jsx"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { NoteInsertBar } from "../cmps/NoteInsertBar.jsx"
 import { NoteHeader } from "../cmps/NoteHeader.jsx"
-// import {mailService} from '../../mail/services/mail.service.js'
 
-// const { useParams, useNavigate, Link } = ReactRouterDOM
-// const navigate = useNavigate()
-
+import {mailService} from '../../mail/services/mail.service.js'
+const { useParams, useNavigate, Link } = ReactRouterDOM
 const { useState, useEffect, useRef } = React
-
 
 export function NoteIndex() {
 
+    const navigate = useNavigate()
     const [notes, setNotes] = useState(null)
     const [filterBy, setFilterBy] = useState('notes')
 
@@ -55,6 +53,8 @@ export function NoteIndex() {
                 console.log(err)
                 showErrorMsg('Cannot save new color')
             })
+            onCreateNoteFromMail('some demo content')
+            
     }
 
     function onPin(noteId, pinState) {
@@ -90,17 +90,35 @@ export function NoteIndex() {
         setFilterBy(newFilter)
         return
     }
+    
+    // note to mail function 
+    function onCreateDraftFromNote(noteTitle = 'from note', noteContent='noteContent') {
+        const mail = mailService.getNewMail()
+        mail.subject = noteTitle
+        mail.body = noteContent
 
-    //note to mail function 
-    // function onCreateDraftFromNote(noteTitle = 'from note', noteContent) {
-    //     mailService.save(mailService.getNewMail())
-    //         .then(mail => {
-    //             mail.subject = noteTitle
-    //             mail.body = noteContent
-    //             mailService.save(mail)
-    //                 .then(()=>navigate(`http://127.0.0.1:5504/index.html/mail/list?mailDraftId=${mail.id}`))
-    //         })
-    // }
+        mailService.save(mail)
+        .then(newMail => goToMail(newMail))
+    }
+
+    function goToMail(mail) {
+        console.log(mail)
+        navigate(`/mail/list?folder=drafts`)
+    }
+
+    function onCreateNoteFromMail(mailContent) {
+        console.log('send note from email')
+        const type = 'NoteText'
+        const content = mailContent
+        const newNote = noteService.createUserNote(type,content)
+
+        //saving to DB and updating dom
+        noteService.save(newNote)
+        .then(savedNote => {
+            setNotes(prevNotes => [...prevNotes,savedNote])
+        })
+        .catch(err => console.log(err))
+    }
 
     if (!notes) return <div>Loading...</div>
     const pinnedNotes = notes.filter(note => note.isPinned)
@@ -110,8 +128,8 @@ export function NoteIndex() {
             <NoteHeader/>
             <NoteSideBar changeFilter={changeFilter}/>
             <NoteInsertBar setNotes={setNotes}/>
-            <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} />
-            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin}/>
+            <NoteList notes={pinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote}/>
+            <NoteList notes={unPinnedNotes} onDelete={onDelete} changeColor={changeColor} onPin={onPin} onCreateDraftFromNote={onCreateDraftFromNote}/>
         </section>
     )
 }
