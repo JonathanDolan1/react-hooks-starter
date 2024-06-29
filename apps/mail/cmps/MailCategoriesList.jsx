@@ -7,7 +7,6 @@ export function MailCategoriesList({ selectedCategories, onSetFilter }) {
     // selectedCategories is a Set
 
     useEffect(() => {
-        console.log(selectedCategories);
         markCategories()
     }, [])
 
