@@ -13,13 +13,13 @@ export function MailEdit({ setMails }) {
     useEffect(() => {
         mailService.get(searchParams.get('mailDraftId'))
             .then(setMailDraft)
-            .catch(err => showErrorMsg('Error fetching mail draft: ', err))
+            .catch(err => showErrorMsg('Error fetching mail draft: ' + err))
     }
         , [])
 
     useEffect(() => {
         if (mailDraft) {
-            onSaveMailDraft(mailDraft)
+            saveMailDraft(mailDraft)
             if (mailDraft.sentAt) {
                 showSuccessMsg('Mail sent successfuly')
                 setMails(prevMails => [mailDraft, ...prevMails.filter(mail=>mail.id!==mailDraft.id)])
@@ -28,13 +28,13 @@ export function MailEdit({ setMails }) {
         }
     }, [mailDraft])
 
-    function onSaveMailDraft(mail) {
+    function saveMailDraft(mail) {
         mailService.save(mail)
-            .catch(err => showErrorMsg('Error saving the draft: ', err))
+            .catch(err => showErrorMsg('Error saving the draft: ' + err))
     }
 
     function onCloseEdit() {
-        setSearchParams({ ...searchParams, mailDraftId: '' })
+        setSearchParams({ ...mailService.getAllSearchParams(searchParams), mailDraftId: '' })
     }
 
     function handleChange({ target }) {

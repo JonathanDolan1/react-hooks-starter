@@ -1,4 +1,4 @@
-.mail-folder-list{
+.mail-folder-list {
     display: flex;
     flex-direction: column;
     height: 3.5rem;
@@ -6,40 +6,52 @@
     font-size: 0.875rem;
 }
 
-.mail-folder-list label{
+.mail-folder-list label {
     padding: 1em;
     display: flex;
     gap: 1em;
 }
 
-.mail-folder-list .icon{
+.mail-folder-list .icon {
     width: 15px;
 }
 
-.mail-folder-list input{
+.mail-folder-list input {
     display: none;
 }
 
-.mail-folder-list.selected{
+.mail-folder-list.selected {
     font-weight: bold;
 }
 
-.mail-folder-list label:hover{
+.mail-folder-list label:hover {
     cursor: pointer;
 }
 
-.mail-folder-list.inbox li.inbox{
+.mail-folder-list.inbox li.inbox {
     font-weight: 700;
 }
 
-.mail-folder-list.sent li.sent{
+.mail-folder-list.sent li.sent {
     font-weight: 700;
 }
 
-.mail-folder-list.trash li.trash{
+.mail-folder-list.trash li.trash {
     font-weight: 700;
 }
 
-.mail-folder-list.drafts li.drafts{
+.mail-folder-list.drafts li.drafts {
     font-weight: 700;
+}
+
+.mail-folder-list.all li.all {
+    font-weight: 700;
+}
+
+.mail-folder-list.starred li.starred {
+    font-weight: 700;
+}
+
+.mail-folder-list li.spam * {
+    cursor: unset !important;
 }

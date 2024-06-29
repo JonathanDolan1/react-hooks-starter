@@ -10,23 +10,25 @@ export function MailDetails({ mailId }) {
     useEffect(() => {
         mailService.get(mailId)
             .then(setMail)
-            .catch(err => showErrorMsg('error fetching the mail :', err))
+            .catch(err => showErrorMsg('error fetching the mail:' + err))
     }, [])
 
     if (!mail) return <section className="loading">Loading...</section>
 
+    const { subject, from, sentAt, body } = mail
+
     return (
         <section className="mail-details">
-            <span className="subject">{mail.subject}</span>
+            <span className="subject">{subject}</span>
             <div className="from-date-icons">
-                <span className="from">{mail.from}</span>
+                <span className="from">{from}</span>
                 <div className="date-icons">
-                    <span className="date">{mail.date}</span>
+                    <span className="date">{mailService.formatTimestamp(sentAt)}</span>
                     <div className="icons">
 
                     </div>
                 </div>
-                <div className="body">{mail.body}</div>
+                <div className="body">{body}</div>
 
             </div>
             {/* {JSON.stringify(mail)} */}

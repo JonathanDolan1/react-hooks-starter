@@ -14,36 +14,39 @@ export const mailService = {
     getNewMail,
     getFilterFromSearchParams,
     getSortFromSearchParams,
+    getAllSearchParams,
+    formatTimestamp
     // getDefaultFilter,
 }
 
-
 function query(searchParams = {}) {
+
 
     return storageService.query(MAIL_KEY)
         .then(mails => {
 
             const { filterBy, sortBy } = searchParams
 
-            const { searchType, txt } = filterBy
+            const { folder, txt, isRead, isStarred } = { ...filterBy }
+            
+            if (isStarred) mails = mails.filter(mail => mail.isStarred === isStarred)
 
-            switch (searchType) {
-                case 'txt':
-                    if (txt) {
-                        const regex = new RegExp(txt, 'i')
-                        mails = mails.filter(mail =>
-                            regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
-                        )
-                    }
-                    break
+            if (txt) {
+                const regex = new RegExp(txt, 'i')
+                mails = mails.filter(mail =>
+                    regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
+                )
             }
 
-
-
-            if (!filterBy.folder) filterBy.folder = 'inbox'
-            switch (filterBy.folder) {
+            switch (folder) {
+                case 'all':
+                    break
+                case '':
                 case 'inbox':
                     mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
+                    break
+                case 'starred':
+                    mails = mails.filter(mail => mail.isStarred)
                     break
                 case 'sent':
                     mails = mails.filter(mail => mail.from === mailDemoDataService.getLoggedInUser().email && mail.sentAt)
@@ -55,7 +58,9 @@ function query(searchParams = {}) {
                     mails = mails.filter(mail => !mail.sentAt)
                     break
             }
+            
 
+            if (isRead) mails = mails.filter(mail => mail.isRead.toString() === isRead)
 
 
             if (!sortBy.sortType) {
@@ -63,7 +68,7 @@ function query(searchParams = {}) {
                 sortBy.sortDir = 1
             }
 
-            const { sortType, sortDir } = sortBy
+            const { sortType, sortDir } = { ...sortBy }
 
             switch (sortType) {
                 case 'date':
@@ -77,6 +82,7 @@ function query(searchParams = {}) {
 
             return mails
         })
+        .catch(err=>showErrorMsg('Error fetching mails: ' + err))
 
 }
 
@@ -117,10 +123,14 @@ function getFilterFromSearchParams(searchParams) {
 
     const folder = searchParams.get('folder') || ''
     const txt = searchParams.get('txt') || ''
+    const isRead = searchParams.get('isRead') || ''
+    const isStarred = searchParams.get('isStarred') || ''
 
     return {
         folder,
-        txt
+        txt,
+        isRead,
+        isStarred
     }
 }
 
@@ -135,12 +145,48 @@ function getSortFromSearchParams(searchParams) {
     }
 }
 
+function getAllSearchParams(searchParams){
+    return {...getFilterFromSearchParams(searchParams),...getSortFromSearchParams(searchParams)}
+}
+
 function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = mailDemoDataService.createDemoMails(50)
         utilService.saveToStorage(MAIL_KEY, mails)
     }
+}
+
+function formatTimestamp(timestamp) {
+    if (!timestamp) return 'NO DATE'
+    const date = new Date(timestamp);
+
+    // Check if the timestamp is within the current day
+    const currentDate = new Date().toDateString();
+    if (date.toDateString() === currentDate) {
+        let hours = date.getHours()
+        const ampm = hours < 12 ? "AM" : "PM"
+        hours = hours % 12
+        hours = hours ? hours : 12
+        const minutes = date.getMinutes()
+        const formattedMinutes = minutes < 10 ? "0" + minutes : minutes
+        return `${hours}:${formattedMinutes} ${ampm}`
+    }
+
+    // Check if the timestamp is within the current year
+    const currentYear = new Date().getFullYear()
+    if (date.getFullYear() === currentYear) {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        const month = monthNames[date.getMonth()]
+        const day = date.getDate()
+        return `${month} ${day}`
+    }
+
+    // Default format: m/d/yy
+    const month = (date.getMonth() + 1).toString()
+    const day = date.getDate().toString()
+    const year = date.getFullYear().toString().substr(2, 2)
+    return `${month}/${day}/${year}`
 }
 
 // function _setNextPrevMailId(mail) {

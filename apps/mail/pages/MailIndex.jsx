@@ -7,12 +7,10 @@ import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.servic
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 
-
 const { useState, useEffect } = React
-const { useParams, useSearchParams } = ReactRouterDOM
+const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
-
 
     const { mailId: selectedMailId } = useParams()
 
@@ -22,6 +20,7 @@ export function MailIndex() {
     const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
 
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadMails()
@@ -29,23 +28,25 @@ export function MailIndex() {
     }, [filterBy, sortBy])
 
     function loadMails() {
-        mailService.query({filterBy,sortBy})
+        mailService.query({ filterBy, sortBy })
             .then(setMails)
-            .catch(err => showErrorMsg('Error fetching mails from storage: ', err))
+            .catch(err => showErrorMsg('Error fetching mails from storage: ' + err))
     }
 
     function onAddMail() {
         mailService.save(mailService.getNewMail())
-            .then(mail => setSearchParams({ ...searchParams, mailDraftId: mail.id }))
+            .then(mail => {
+                setSearchParams({ ...filterBy, ...sortBy, mailDraftId: mail.id })
+        })
     }
 
     function onRemoveMail(id) {
         mailService.remove(id)
             .then(() => {
-                setMails(prevMails => prevMails.filter(mail => mail.id !== id))
+                unrenderMail(id)
                 showSuccessMsg(`Mail ${id} removed successfuly`)
             })
-            .catch(err => showErrorMsg(`Error removing mail ${id}: `, err))
+            .catch(err => showErrorMsg(`Error removing mail ${id}: ` + err))
     }
 
     function onArchiveMail(id) {
@@ -55,25 +56,50 @@ export function MailIndex() {
                 mail.removedAt = mail.removedAt ? null : Date.now()
                 mailService.save(mail)
                 showSuccessMsg(`Mail ${id} ${archiveRestoreStr} successfuly`)
+                if (filterBy.folder !== 'all') unrenderMail(id)
             })
-            .catch(err => showErrorMsg('Error archiving the mail: ', err))
+            .catch(err => showErrorMsg('Error archiving the mail: ' + err))
     }
 
-    function onMarkAsRead(id) {
+    function unrenderMail(id) {
+        setMails(prevMails => prevMails.filter(mail => mail.id !== id))
+    }
+
+    function onToggleReadStatus(id) {
+        updateMailState(id, 'isRead')
+    }
+
+    function onStarClicked(id) {
+        updateMailState(id, 'isStarred')
+    }
+
+    function updateMailState(id, val) {
         mailService.get(id)
             .then(mail => {
-                mail.isRead = !mail.isRead
+                mail[val] = !mail[val]
                 mailService.save(mail)
-                    .then(mail => setMails(prevMails => [mail, ...prevMails.filter(prevMail => prevMail.id !== mail.id)]))
+                    .then(mail => {
+                        if (!filterBy[val]) {
+                            setMails(prevMails => {
+                                const idx = prevMails.findIndex(mail => mail.id === id)
+                                const newMails = [...prevMails]
+                                newMails.splice(idx, 1, mail)
+                                return newMails
+                            })
+                        } else loadMails()
+                    })
             })
-            .catch(err => showErrorMsg(`Error marking the mail as un/read: `, err))
+            .catch(err => {
+                const errStr = val === 'isStarred' ? `Error star marking: ` : `Error marking the mail as un/read: `
+                showErrorMsg(errStr + err)
+            })
     }
 
     function onSetFilter(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    function onSetSort(sortBy){
+    function onSetSort(sortBy) {
         setSortBy(prevSort => ({ ...prevSort, ...sortBy }))
     }
 
@@ -81,7 +107,7 @@ export function MailIndex() {
 
     const mailDraftId = searchParams.get('mailDraftId')
     const selectedFolder = filterBy.folder
-    const selectedSort = {...sortBy}
+    const selectedSort = { ...sortBy }
 
     return (
         <section className="mail-index">
@@ -92,10 +118,10 @@ export function MailIndex() {
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
                     <div className="mail-filter-mail-sort">
-                    <MailFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
-                    <MailSort sortBy={selectedSort} onSetSort={onSetSort}/>
+                        <MailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                        <MailSort sortBy={selectedSort} onSetSort={onSetSort} />
                     </div>
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onMarkAsRead={onMarkAsRead} />
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onToggleReadStatus={onToggleReadStatus} onStarClicked={onStarClicked} />
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}

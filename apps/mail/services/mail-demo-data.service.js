@@ -24,6 +24,7 @@ function createDemoMails(length = _demoMailsLength) {
             subject: _generateRandomSubject(),
             body: _generateRandomBody(),
             isRead: _getRandomTrueFalse(),
+            isStarred: _getRandomTrueFalse(),
             ..._getRandomFromAndTo(),
         }
         const timestamps = _generateTimestamps(mail.to)
