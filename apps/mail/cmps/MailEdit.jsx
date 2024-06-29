@@ -1,7 +1,8 @@
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
+import { noteService } from "../../note/services/note.service.js"
 
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams ,useNavigate} = ReactRouterDOM
 const { useState, useEffect } = React
 
 export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
@@ -9,6 +10,8 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
     const [mailDraft, setMailDraft] = useState(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         mailService.get(mailId)
@@ -56,6 +59,15 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
         setMailDraft(prevMailDraft => ({ ...prevMailDraft, sentAt: Date.now() }))
     }
 
+    function onCreateNoteFromMail(mailContent) {
+        const type = 'NoteText'
+        const content = mailContent
+        const newNote = noteService.createUserNote(type, content)
+        noteService.save(newNote)
+            .then(() => navigate('/note'))
+            .catch(err => showErrorMsg('Error creating a note from mail: ' + err))
+    }
+
     // if (!mailDraft) return <section className="loading">Loading...</section>
 
     return (
@@ -66,6 +78,7 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
                     <div className="title-icons">
                         <span className="title">New Message</span>
                         <span className="icons">
+                            <i className="icon fa-solid fa-note-sticky" onClick={() => onCreateNoteFromMail(mailDraft.body)}></i>
                             <i className="icon fa-solid fa-up-right-and-down-left-from-center"></i>
                             <i className="icon fa-solid fa-window-minimize"></i>
                             <i className="icon fa-solid fa-xmark" onClick={onCloseEdit}></i>
