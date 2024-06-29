@@ -44,6 +44,9 @@ function query(searchParams = {}) {
                 case 'inbox':
                     mails = mails.filter(mail => mail.to === mailDemoDataService.getLoggedInUser().email && !mail.removedAt)
                     break
+                case 'starred':
+                    mails = mails.filter(mail => mail.isStarred)
+                    break
                 case 'sent':
                     mails = mails.filter(mail => mail.from === mailDemoDataService.getLoggedInUser().email && mail.sentAt)
                     break

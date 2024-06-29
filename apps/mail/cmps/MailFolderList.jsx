@@ -14,6 +14,10 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
                 <input onChange={onFolderClicked} type="radio" name="folder" id="inbox" value="inbox" readOnly/>
                 <label htmlFor="inbox"><i className="icon fa-solid fa-inbox"></i><span>Inbox</span></label>
             </li>
+            <li className="mail-folder-container starred">
+                <input onChange={onFolderClicked} type="radio" name="folder" id="starred" value="starred" readOnly/>
+                <label htmlFor="starred"><i className="icon fa-regular fa-star"></i><span>Starred</span></label>
+            </li>
             <li className="mail-folder-container sent">
                 <input onChange={onFolderClicked} type="radio" name="folder" id="sent" value="sent" readOnly/>
                 <label htmlFor="sent"><i className="icon fa-solid fa-paper-plane"></i><span>Sent</span></label>
@@ -29,6 +33,10 @@ export function MailFolderList({ selectedFolder, onSetFilter }) {
             <li className="mail-folder-container all">
                 <input onChange={onFolderClicked} type="radio" name="folder" id="all" value="all" readOnly/>
                 <label htmlFor="all"><i className="icon fa-solid fa-envelopes-bulk"></i><span>All Mail</span></label>
+            </li>
+            <li className="mail-folder-container spam" title="In dev">
+                <input type="radio" name="folder" id="spam" value="spam" readOnly/>
+                <label htmlFor="spam"><i className="icon fa-solid fa-exclamation-circle"></i><span>Spam</span></label>
             </li>
         </ul>
     )

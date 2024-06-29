@@ -8,14 +8,12 @@
 
 .mail-preview:first-child {
     border-block-start: 0.08lh solid lightgray;
-    ;
 }
 
 .mail-preview:hover {
-    cursor: pointer;
     grid-template-columns: 20% 80% 0%;
+    cursor: pointer;
 }
-
 
 .mail-preview.read {
     background-color: var(--readMailColor);
