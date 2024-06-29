@@ -21,7 +21,7 @@ export function AppHeader() {
 
             <div className="app-header-icons">
                 <i className="fa-solid fa-arrow-rotate-right"></i>
-                <NavLink to="/mail/list?folder=&txt=&isRead=&isStarred=&sortType=date&sortDir=1&mailDraftId=Gwfjk"><i className="fa-regular fa-envelope"></i></NavLink>
+                <NavLink to="/mail/list"><i className="fa-regular fa-envelope"></i></NavLink>
                 <i className="fa-solid fa-gear"></i>
                 <i className="fa-solid fa-bars" onClick={onBarsClick}>
                     <div className={navClass}>
