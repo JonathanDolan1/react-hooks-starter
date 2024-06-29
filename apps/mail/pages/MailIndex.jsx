@@ -7,6 +7,7 @@ import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.servic
 import { MailDetails } from "../cmps/MailDetails.jsx"
 import { MailEdit } from "../cmps/MailEdit.jsx"
 import { MailCategoriesList } from "../cmps/MailCategoriesList.jsx"
+import { noteService } from "../../note/services/note.service.js"
 
 const { useState, useEffect } = React
 const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
@@ -22,7 +23,7 @@ export function MailIndex() {
     const [sortBy, setSortBy] = useState(mailService.getSortFromSearchParams(searchParams))
     const [mailDraftIdObj, setMailDraftIdObj] = useState(mailService.getMailDraftIdObjFromSearchParams(searchParams))
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
         console.log(mailDraftIdObj);
@@ -107,6 +108,15 @@ export function MailIndex() {
         setSortBy(prevSort => ({ ...prevSort, ...sortBy }))
     }
 
+    function onCreateNoteFromMail(mailContent) {
+        const type = 'NoteText'
+        const content = mailContent
+        const newNote = noteService.createUserNote(type, content)
+        noteService.save(newNote)
+            .then(() => navigate('/note'))
+            .catch(err => showErrorMsg('Error creating a note from mail: ' + err))
+    }
+
     if (!mails) return <section className="loading">Loading...</section>
 
     const mailDraftId = mailService.getMailDraftIdObjFromSearchParams(searchParams).mailDraftId
@@ -131,7 +141,7 @@ export function MailIndex() {
                 </div>}
             {selectedMailId &&
                 <MailDetails mailId={selectedMailId} />}
-            {mailDraftId && <MailEdit loadMails={loadMails} setMailDraftIdObj={setMailDraftIdObj} mailId={mailDraftId}/>}
+            {mailDraftId && <MailEdit loadMails={loadMails} setMailDraftIdObj={setMailDraftIdObj} mailId={mailDraftId} onCreateNoteFromMail={onCreateNoteFromMail}/>}
         </section>
     )
 }

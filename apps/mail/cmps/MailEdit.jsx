@@ -1,17 +1,14 @@
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { mailService } from "../services/mail.service.js"
-import { noteService } from "../../note/services/note.service.js"
 
-const { useSearchParams ,useNavigate} = ReactRouterDOM
+const { useSearchParams } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
+export function MailEdit({ setMailDraftIdObj, loadMails, mailId, onCreateNoteFromMail }) {
 
     const [mailDraft, setMailDraft] = useState(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         mailService.get(mailId)
@@ -59,16 +56,7 @@ export function MailEdit({ setMailDraftIdObj, loadMails, mailId }) {
         setMailDraft(prevMailDraft => ({ ...prevMailDraft, sentAt: Date.now() }))
     }
 
-    function onCreateNoteFromMail(mailContent) {
-        const type = 'NoteText'
-        const content = mailContent
-        const newNote = noteService.createUserNote(type, content)
-        noteService.save(newNote)
-            .then(() => navigate('/note'))
-            .catch(err => showErrorMsg('Error creating a note from mail: ' + err))
-    }
-
-    // if (!mailDraft) return <section className="loading">Loading...</section>
+ 
 
     return (
         <section className="mail-edit">
