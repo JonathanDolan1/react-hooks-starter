@@ -51,8 +51,8 @@
     border-block-end: 0.08lh solid lightgray;
 }
 
-.mail-index .mail-filter-mail-sort .input-select{
-    border:none;
+.mail-index .mail-filter-mail-sort .input-select {
+    border: none;
     background-color: rgb(241 245 247);
     border-radius: 2px;
 
@@ -68,6 +68,24 @@
     display: grid;
     grid-template-rows: 3.5rem 20rem auto;
     background-color: var(--mailBgColor);
-
+    /* width: 1%; */
     /* padding-block-start: 1lh; */
+}
+
+@media (max-width:860px) {
+    html {
+        /* grid-template-columns: 0fr 1fr; */
+        font-size: 14px;
+        /* background-color: aqua; */
+    }
+
+    /* .btn-edit-mail{
+        width: 3.5rem;
+        overflow: hidden; */
+    /* } */
+
+    .mail-folder-list>*,
+    .mail-categories-list>* {
+        display: none;
+    }
 }

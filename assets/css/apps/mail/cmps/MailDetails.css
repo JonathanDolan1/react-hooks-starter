@@ -43,3 +43,18 @@
     display: flex;    
     gap: 2em;
 }
+
+.mail-details .icon {
+    border-radius: 50%;
+    transition: 400ms;
+    padding:0.5em
+}
+
+.mail-details .icon:hover {
+    background-color: var(--iconHoverBgColor);
+    scale: 1.1;
+}
+
+.mail-details .star-icon.starred {
+    color: var(--starredColor)
+}
