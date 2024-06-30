@@ -2,38 +2,38 @@
 const { useState, useEffect } = React
 
 
-export function MailCategoriesList({ selectedCategories, onSetFilter }) {
+export function MailCategoriesList({ selectedCategoriesSet, onSetFilter }) {
 
-    // selectedCategories is a Set
+    // selectedCategoriesSet is a Set
 
     useEffect(() => {
         markCategories()
     }, [])
 
     function markCategories() {
-        selectedCategories.forEach(markCategory)
+        selectedCategoriesSet.forEach(markCategory)
     }
 
     function markCategory(category) {
-        if (selectedCategories.has(category)) {
+        if (selectedCategoriesSet.has(category)) {
             document.querySelector('#' + category).checked = true
         }
     }
 
     function onCategoryClicked({ target }) {
         const { value, checked } = target
-        if (checked && !selectedCategories.has(value)) {
-            const filter = { categories: Array.from(selectedCategories.add(value)).join('0') }
+        if (checked && !selectedCategoriesSet.has(value)) {
+            const filter = { categories: Array.from(selectedCategoriesSet.add(value)).join('0') }
             onSetFilter(filter)
-        } else if (!checked && selectedCategories.has(value)) {
-            const newSelectedCategories = new Set([...selectedCategories])
-            newSelectedCategories.delete(value)
-            const filter = { categories: Array.from(newSelectedCategories).join('0') }
+        } else if (!checked && selectedCategoriesSet.has(value)) {
+            const newSelectedCategoriesSet = new Set([...selectedCategoriesSet])
+            newSelectedCategoriesSet.delete(value)
+            const filter = { categories: Array.from(newSelectedCategoriesSet).join('0') }
             onSetFilter(filter)
         }
     }
 
-    const selectedCategoriesClassesStr = Array.from(selectedCategories).join(' ')
+    const selectedCategoriesClassesStr = Array.from(selectedCategoriesSet).join(' ')
 
 
     return (

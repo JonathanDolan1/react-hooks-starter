@@ -16,7 +16,8 @@ export const mailService = {
     getSortFromSearchParams,
     getMailDraftIdObjFromSearchParams,
     getAllSearchParams,
-    formatTimestamp
+    formatTimestamp,
+
     // getDefaultFilter,
 }
 
@@ -98,7 +99,7 @@ function query(searchParams = {}) {
 
 function get(mailId) {
     return storageService.get(MAIL_KEY, mailId)
-    // .then(mail => _setNextPrevMailId(mail))
+        .then(mail => _setNextPrevMailId(mail))
 }
 
 function remove(mailId) {
@@ -207,13 +208,13 @@ function formatTimestamp(timestamp) {
     return `${month}/${day}/${year}`
 }
 
-// function _setNextPrevMailId(mail) {
-//     return storageService.query(MAIL_KEY).then((mails) => {
-//         const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-//         const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
-//         const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
-//         mail.nextMailId = nextMail.id
-//         mail.prevMailId = prevMail.id
-//         return mail
-//     })
-// }
+function _setNextPrevMailId(mail) {
+    return storageService.query(MAIL_KEY).then((mails) => {
+        const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
+        const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+        const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
+        mail.nextMailId = nextMail.id
+        mail.prevMailId = prevMail.id
+        return mail
+    })
+}

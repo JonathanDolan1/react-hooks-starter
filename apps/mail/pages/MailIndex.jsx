@@ -125,6 +125,7 @@ export function MailIndex() {
     const selectedCategories = filterBy.categories ? filterBy.categories.split('0') : []
     const searchTxt = {...filterBy}.txt
     const {isRead,isStarred} = {...filterBy}
+    const selectedCategoriesSet = new Set([...selectedCategories])
     
     return (
         <section className="mail-index">
@@ -132,7 +133,7 @@ export function MailIndex() {
             <div className="btn-edit-mail-mail-folder-list-mail-categories-list">
                 <button className="btn-edit-mail" onClick={onAddMail}><i className="fa-solid fa-pencil"></i> <span>Compose</span></button>
                 <MailFolderList selectedFolder={selectedFolder} onSetFilter={onSetFilter} />
-                <MailCategoriesList selectedCategories={new Set([...selectedCategories])} onSetFilter={onSetFilter}/>
+                <MailCategoriesList selectedCategoriesSet={selectedCategoriesSet} onSetFilter={onSetFilter}/>
             </div>
             {!selectedMailId &&
                 <div className="mail-filter-mail-list-mail-sort">
@@ -143,7 +144,7 @@ export function MailIndex() {
                     <MailList mails={mails} onRemoveMail={onRemoveMail} onArchiveMail={onArchiveMail} onToggleReadStatus={onToggleReadStatus} onStarClicked={onStarClicked} />
                 </div>}
             {selectedMailId &&
-                <MailDetails mailId={selectedMailId} />}
+                <MailDetails mailId={selectedMailId} onArchiveMail={onArchiveMail} onRemoveMail={onRemoveMail} onToggleReadStatus={onToggleReadStatus} onStarClicked={onStarClicked}/>}
             {mailDraftId && <MailEdit loadMails={loadMails} setMailDraftIdObj={setMailDraftIdObj} mailId={mailDraftId} onCreateNoteFromMail={onCreateNoteFromMail}/>}
         </section>
     )
