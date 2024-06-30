@@ -23,10 +23,10 @@ export function MailSort({ sortBy, onSetSort }) {
     return (
         <section className="mail-sort">
 
-            <ul className="mail-sort-list clean-list">
-                <li>
+            <ul className="mail-sort clean-list">
+                <li className="sort-by-li">
                     <label htmlFor="sortType">Sort by: </label>
-                    <select className="sort-type" onChange={onSortInputClicked} name="sortType" id="sortType">
+                    <select className="sort-type input-select" onChange={onSortInputClicked} name="sortType" id="sortType">
                         <option value="date">Date</option>
                         <option value="subject">Subject</option>
                     </select>

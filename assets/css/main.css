@@ -52,3 +52,5 @@
 @import './apps/mail/cmps/MailSort.css';
 @import './apps/mail/cmps/MailCategoriesList.css';
 @import './apps/mail/cmps/MailHeader.css';
+@import './apps/mail/cmps/MailFilter.css';
+@import './apps/mail/cmps/MailDetails.css';

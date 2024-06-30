@@ -74,20 +74,25 @@
 .mail-edit .btn-send{
     background-color: var(--sendBtnColor);
     color: white;
+    border-radius: 0;
     border-top-left-radius: 2em;
     border-bottom-left-radius: 2em;
-    border:none;
+    border: none;
     border-inline-end: 1px solid black;
     padding-block: 0.8em;
-    padding-inline: 1.7em ;
+    padding-inline: 1.7em;
+    margin: 0;
 }
 
 .mail-edit .btn-schedule-send{
     background-color: var(--sendBtnColor);
     color: white;
+    border-radius: 0;
     border-top-right-radius: 2em;
     border-bottom-right-radius: 2em;
     border:none;
     padding-block: 0.8em;
     padding-inline: 1em ;
+    margin: 0;
+
 }

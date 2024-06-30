@@ -6,9 +6,9 @@
     font-size: 0.875rem;
 }
 
-.mail-preview:first-child {
+/* .mail-preview:first-child {
     border-block-start: 0.08lh solid lightgray;
-}
+} */
 
 .mail-preview:hover {
     grid-template-columns: 20% 80% 0%;

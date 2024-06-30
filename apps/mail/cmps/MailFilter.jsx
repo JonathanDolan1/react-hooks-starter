@@ -11,7 +11,7 @@ export function MailFilter({ isRead, isStarred, onSetFilter }) {
     return (
         <section className="mail-filter">
             <span>Is read: </span>
-            <select onChange={handleChange} value={isRead} name="isRead" id="is-read">
+            <select className="input-select" onChange={handleChange} value={isRead} name="isRead" id="is-read">
                 <option value=""></option>
                 <option value="true">Read</option>
                 <option value="false">Unread</option>

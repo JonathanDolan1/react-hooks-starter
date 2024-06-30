@@ -1,0 +1,45 @@
+.mail-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    background-color: white;
+    border-radius: 20px;
+    padding: 2em;
+    font-size: 0.875rem;
+}
+
+.mail-details .top-icons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mail-details .top-icons > *{
+    display: flex;
+    gap: 3em;
+}
+
+.mail-details .subject{
+    font-size: 1.375rem;
+}
+
+.mail-details .from{
+    font-weight: bold;
+}
+
+.mail-details .date, .mail-details .to{
+    font-weight: 400;
+    color:rgb(94, 94, 94);
+    font-size: 0.75rem;
+    font-size: 0.54;
+
+}
+
+.mail-details .from-to-date-icons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mail-details .date-middle-icons{
+    display: flex;    
+    gap: 2em;
+}

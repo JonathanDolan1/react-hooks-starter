@@ -1,0 +1,6 @@
+.mail-filter{
+    display: flex;
+    align-items: center;
+    gap:1em;
+    margin-inline-start: 2.4% ;
+}

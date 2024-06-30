@@ -7,6 +7,11 @@
     padding-block-start: 1lh;
     height: 100vh;
     width: 100%;
+    padding-inline: 1em;
+    /* outline-color: var(--mailBgColor);
+    outline-width: 50em;
+    outline-style: outset; */
+    /* z-index: 3; */
 }
 
 .mail-index .btn-edit-mail {
@@ -22,11 +27,11 @@
     border-radius: 10px;
     cursor: pointer;
     padding-inline: 1em;
-    margin:0;
+    margin: 0;
 }
 
-.mail-index .btn-edit-mail:hover{
-    color:black !important;
+.mail-index .btn-edit-mail:hover {
+    color: black !important;
 }
 
 .mail-index .icon {
@@ -36,10 +41,33 @@
 .mail-index .mail-filter-mail-sort {
     display: flex;
     justify-content: space-between;
+    font-size: 0.875rem;
+    /* color:lightgray */
+    padding-block: 1lh;
+    /* border-block-start: 1px solid lightgray; */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    border-block-end: 0.08lh solid lightgray;
+}
+
+.mail-index .mail-filter-mail-sort .input-select{
+    border:none;
+    background-color: rgb(241 245 247);
+    border-radius: 2px;
+
+}
+
+.mail-index .mail-filter-mail-sort .input-select:focus {
+    outline: none;
+    /* border-color: none; */
+    /* box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); */
 }
 
 .mail-index .btn-edit-mail-mail-folder-list-mail-categories-list {
     display: grid;
     grid-template-rows: 3.5rem 20rem auto;
+    background-color: var(--mailBgColor);
+
     /* padding-block-start: 1lh; */
 }

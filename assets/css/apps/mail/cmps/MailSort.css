@@ -1,4 +1,7 @@
 .mail-sort {
+      display: flex;
+    align-items: center;
+    gap:1em;
     margin-inline-end: 2.4%;
 }
 
@@ -8,4 +11,9 @@
 
 .mail-sort .sort-dir{
     cursor: pointer;
+}
+
+.mail-sort .sort-by-li{
+    display: flex;
+    gap: 1em;
 }

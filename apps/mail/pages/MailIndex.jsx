@@ -125,6 +125,7 @@ export function MailIndex() {
     const selectedCategories = filterBy.categories ? filterBy.categories.split('0') : []
     const searchTxt = {...filterBy}.txt
     const {isRead,isStarred} = {...filterBy}
+    
     return (
         <section className="mail-index">
             <MailHeader txt={searchTxt} onSetFilter={onSetFilter}/>

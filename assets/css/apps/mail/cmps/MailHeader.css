@@ -3,15 +3,15 @@
     width: 100%;
     height: 70px;
     top: 0;
-    z-index: 10;
+    z-index: 3;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-inline-start: 18px;
 
-    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-    background-color: white;
+    /* border-bottom: 1px solid rgba(128, 128, 128, 0.4); */
+    background-color: var(--mailBgColor);
 }
 
 .mail-header-icons {
@@ -55,11 +55,11 @@
 
     /* padding-inline-start: 20px; */
 
-    font-family: roboto-regular;
+    /* font-family: roboto-regular;
     font-size: 1rem;
-    color: grey;
+    color: grey; */
 
-    background-color: rgb(241, 243, 244);
+    background-color: var(--mailInputColor);
 
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
     font-size: 16px;
     color: grey;
 
-    background-color: rgb(241, 243, 244);
+    background-color: var(--mailInputColor)
 
 }
 
@@ -92,7 +92,7 @@
 
 .mail-header-search:focus-visible {
     outline: none;
-    background-color: white;
+    background-color: var(--mailInputColor);
     box-shadow: 0px 0px 4px 0px grey;
 
 }
