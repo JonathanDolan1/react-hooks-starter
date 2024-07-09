@@ -41,6 +41,7 @@
 
 .mail-details .date-middle-icons{
     display: flex;    
+    align-items: center;
     gap: 2em;
 }
 

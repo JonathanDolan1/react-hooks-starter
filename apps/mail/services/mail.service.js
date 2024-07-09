@@ -65,9 +65,9 @@ function query(searchParams = {}) {
 
             if (filterBy.categories) {
                 const categories = filterBy.categories.split('0')
-                mails = mails.filter(mail => _isMailHasSomeCategory(mail, categories))
-                function _isMailHasSomeCategory(mail, categories) {
-                    return categories.some(category => mail.categories.includes(category))
+                mails = mails.filter(mail => _isMailHasAllCategories(mail, categories))
+                function _isMailHasAllCategories(mail, categories) {
+                    return categories.every(category => mail.categories.includes(category))
                 }
             }
 
